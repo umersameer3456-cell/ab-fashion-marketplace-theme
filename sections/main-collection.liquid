@@ -44,17 +44,20 @@
           </form>
         </div>
 
+        {% paginate collection.products by 24 %}
         {% if collection.products.size > 0 %}
           <div class="product-grid">
             {% for product in collection.products %}
               {% render 'product-card', product: product %}
             {% endfor %}
           </div>
+          {% render 'pagination', paginate: paginate %}
         {% else %}
           <div class="content-card">
             <p>No products match your selection.</p>
           </div>
         {% endif %}
+        {% endpaginate %}
       </div>
     </div>
   </div>

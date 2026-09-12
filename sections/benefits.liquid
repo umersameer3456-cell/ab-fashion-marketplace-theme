@@ -1,0 +1,13 @@
+<section class="benefits" aria-label="Shopping benefits">
+  <div class="container benefits__grid">
+    {% for block in section.blocks %}
+      <div class="benefit" {{ block.shopify_attributes }}>
+        {% render 'icon-check' %}
+        <strong>{{ block.settings.title }}</strong>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{"name":"Benefits bar","settings":[],"blocks":[{"type":"benefit","name":"Benefit","settings":[{"type":"text","id":"title","label":"Title","default":"Free shipping on orders over $150"}]}],"presets":[{"name":"Benefits bar","blocks":[{"type":"benefit"},{"type":"benefit"},{"type":"benefit"}]}]}
+{% endschema %}

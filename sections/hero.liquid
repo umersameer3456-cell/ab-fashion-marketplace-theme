@@ -1,6 +1,6 @@
 <section class="section hero">
   <div class="container hero__inner">
-    <div>
+    <div class="hero__copy">
       {% if section.settings.eyebrow != blank %}
         <span class="hero__eyebrow">{{ section.settings.eyebrow }}</span>
       {% endif %}
@@ -16,24 +16,16 @@
           <a class="button button--secondary" href="{{ section.settings.secondary_url }}">{{ section.settings.secondary_label }}</a>
         {% endif %}
       </div>
-      <div class="hero__stats">
-        <div class="hero__stat"><strong>30K+</strong><span>happy shoppers</span></div>
-        <div class="hero__stat"><strong>4.9/5</strong><span>average rating</span></div>
-        <div class="hero__stat"><strong>2-day</strong><span>dispatch</span></div>
-      </div>
     </div>
     <div class="hero__visual">
-      <div class="hero__image">
-        {% if section.settings.image != blank %}
-          {{ section.settings.image | image_url: width: 1200 | image_tag: alt: section.settings.heading, loading: 'lazy' }}
-        {% else %}
-          {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
-        {% endif %}
-      </div>
-      <div class="hero__card">
-        <strong>New season</strong><br>
-        <span>Luxury essentials</span>
-      </div>
+      {% assign hero_image = section.settings.image %}
+      {% if section.settings.mobile_image != blank and request.design_mode == false %}
+        <picture><source media="(max-width: 600px)" srcset="{{ section.settings.mobile_image | image_url: width: 900 }}">{{ hero_image | image_url: width: 1400 | image_tag: alt: section.settings.heading, loading: 'eager' }}</picture>
+      {% elsif hero_image != blank %}
+        {{ hero_image | image_url: width: 1400 | image_tag: alt: section.settings.heading, loading: 'eager' }}
+      {% else %}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
     </div>
   </div>
 </section>
@@ -50,6 +42,7 @@
     { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "New arrivals" },
     { "type": "url", "id": "secondary_url", "label": "Secondary button link" },
     { "type": "image_picker", "id": "image", "label": "Hero image" }
+    ,{ "type": "image_picker", "id": "mobile_image", "label": "Mobile image" }
   ],
   "presets": [{ "name": "Hero banner", "category": "Homepage" }]
 }

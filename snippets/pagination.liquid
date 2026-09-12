@@ -1,0 +1,7 @@
+{% if paginate.pages > 1 %}
+  <nav class="pagination" aria-label="Pagination">
+    {% if paginate.previous %}<a class="button button--secondary" href="{{ paginate.previous.url }}">← Previous</a>{% endif %}
+    <span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+    {% if paginate.next %}<a class="button button--secondary" href="{{ paginate.next.url }}">Next →</a>{% endif %}
+  </nav>
+{% endif %}

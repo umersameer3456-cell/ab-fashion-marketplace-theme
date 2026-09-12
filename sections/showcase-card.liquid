@@ -1,38 +1,14 @@
 {% assign selected_collection = collections[section.settings.collection] %}
-{% if selected_collection == blank %}
-  {% assign selected_collection = collections.all %}
-{% endif %}
-
 <section class="section">
   <div class="container">
-    <div class="showcase">
-      <div class="showcase__header">
-        <h3>{{ section.settings.title }}</h3>
-        {% if selected_collection.url != blank %}
-          <a class="button button--secondary" href="{{ selected_collection.url }}">View all</a>
-        {% endif %}
-      </div>
-      {% if section.settings.description != blank %}
-        <p style="margin-bottom:20px; color: var(--color-muted);">{{ section.settings.description }}</p>
+    <div class="collection-promo" {% if section.settings.image != blank %}style="background-image:url('{{ section.settings.image | image_url: width: 1200 }}')"{% endif %}>
+      <h3>{{ section.settings.title }}</h3>
+      {% if section.settings.button_label != blank %}
+        <a class="button" href="{{ selected_collection.url | default: routes.all_products_collection_url }}">{{ section.settings.button_label }}</a>
       {% endif %}
-      <div class="product-grid">
-        {% for product in selected_collection.products limit: section.settings.limit %}
-          {% render 'product-card', product: product %}
-        {% endfor %}
-      </div>
     </div>
   </div>
 </section>
-
 {% schema %}
-{
-  "name": "Showcase card",
-  "settings": [
-    { "type": "text", "id": "title", "label": "Heading", "default": "Perfumes" },
-    { "type": "textarea", "id": "description", "label": "Description", "default": "Rich, elegant scents crafted to suit every mood and occasion." },
-    { "type": "collection", "id": "collection", "label": "Collection" },
-    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 4, "default": 4 }
-  ],
-  "presets": [{ "name": "Showcase card", "category": "Homepage" }]
-}
+{"name":"Collection banner","settings":[{"type":"text","id":"title","label":"Title","default":"New arrivals"},{"type":"collection","id":"collection","label":"Collection"},{"type":"image_picker","id":"image","label":"Image"},{"type":"text","id":"button_label","label":"Button label","default":"Shop now"}],"presets":[{"name":"Collection banner","category":"Homepage"}]}
 {% endschema %}

@@ -17,6 +17,9 @@
     {% endif %}
     {{ content_for_header }}
     {{ 'theme.css' | asset_url | stylesheet_tag }}
+    <style>
+      :root{--ink:{{ settings.color_primary }};--accent:{{ settings.color_accent }};--paper:{{ settings.color_background }}}
+    </style>
   </head>
   <body class="template-{{ template.name | handle }}">
     <a class="skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>

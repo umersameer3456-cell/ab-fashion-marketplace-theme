@@ -17,13 +17,13 @@
         "type": "color",
         "id": "color_accent",
         "label": "Accent color",
-        "default": "#c7a36a"
+        "default": "#35a93b"
       },
       {
         "type": "color",
         "id": "color_background",
         "label": "Background color",
-        "default": "#f6f3ef"
+        "default": "#ffffff"
       },
       {
         "type": "color",

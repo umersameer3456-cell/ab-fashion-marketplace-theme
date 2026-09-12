@@ -6,10 +6,11 @@
           <h3>{{ section.settings.title }}</h3>
           {% if section.settings.text != blank %}<p>{{ section.settings.text }}</p>{% endif %}
         </div>
-        <form method="post" action="/contact#newsletter" class="newsletter__form">
+        {% form 'customer', id: 'newsletter' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
           <input type="email" name="contact[email]" placeholder="Email address" aria-label="Email address">
-          <button class="button button--accent" type="submit">{{ section.settings.button_label }}</button>
-        </form>
+          <button type="submit">{{ section.settings.button_label }}</button>
+        {% endform %}
       </div>
     </div>
   </div>

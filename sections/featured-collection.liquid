@@ -6,19 +6,15 @@
 {% if selected_collection.products_count > 0 %}
   <section class="section">
     <div class="container">
-      <div class="showcase">
-        <div class="showcase__header">
-          <h3>{{ section.settings.title }}</h3>
-          {% if selected_collection.url != blank %}
-            <a class="button button--secondary" href="{{ selected_collection.url }}">View all</a>
-          {% endif %}
-        </div>
+      <div class="section-heading">
+        <h2>{{ section.settings.title }}</h2>
+        {% if selected_collection.url != blank %}<p><a href="{{ selected_collection.url }}">View all products →</a></p>{% endif %}
+      </div>
         <div class="product-grid">
           {% for product in selected_collection.products limit: section.settings.limit %}
             {% render 'product-card', product: product %}
           {% endfor %}
         </div>
-      </div>
     </div>
   </section>
 {% endif %}

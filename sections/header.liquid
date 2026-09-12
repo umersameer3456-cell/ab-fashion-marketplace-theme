@@ -5,19 +5,20 @@
     </button>
 
     <a href="{{ routes.root_url }}" class="brand" aria-label="{{ shop.name }}">
-      <span class="brand__mark">AF</span>
-      <span>AB FASHION</span>
+      {% if settings.logo != blank %}
+        {{ settings.logo | image_url: width: 220 | image_tag: alt: shop.name, width: 110 }}
+      {% else %}
+        <span class="brand__mark">AF</span><span>AB FASHION</span>
+      {% endif %}
     </a>
 
     <nav class="main-nav" aria-label="Main navigation">
       {% if linklists[section.settings.menu].links == blank %}
         <a href="{{ routes.all_products_collection_url }}">Shop</a>
-        <a href="{{ routes.collections_url }}/perfumes">Perfumes</a>
-        <a href="{{ routes.collections_url }}/watches">Watches</a>
-        <a href="{{ routes.collections_url }}/clothes">Clothes</a>
-        <a href="{{ routes.collections_url }}/bags">Bags</a>
-        <a href="{{ routes.collections_url }}/shoes">Shoes</a>
-        <a href="{{ routes.collections_url }}/accessories">Accessories</a>
+        <a href="{{ routes.collections_url }}/new-arrivals">New Arrivals</a>
+        <a href="{{ routes.collections_url }}/best-sellers">Best Sellers</a>
+        <a href="/pages/about-us">About</a>
+        <a href="/pages/contact">Contact</a>
       {% else %}
         {% for link in linklists[section.settings.menu].links %}
           <a href="{{ link.url }}">{{ link.title }}</a>
@@ -29,9 +30,9 @@
       <button class="icon-button" type="button" data-search-toggle aria-label="Search">
         {% render 'icon-search' %}
       </button>
-      <a class="icon-button" href="{{ routes.account_url }}" aria-label="Account">
+      {% if shop.customer_accounts_enabled %}<a class="icon-button" href="{{ routes.account_url }}" aria-label="Account">
         {% render 'icon-user' %}
-      </a>
+      </a>{% endif %}
       <a class="icon-button header-cart" href="{{ routes.cart_url }}" aria-label="Cart">
         {% render 'icon-cart' %}
         <span class="header-cart__count">{{ cart.item_count }}</span>
