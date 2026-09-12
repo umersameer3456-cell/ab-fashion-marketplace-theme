@@ -11,7 +11,7 @@
 <section class="section" style="padding-top: 0;">
   <div class="container">
     <div class="collection-layout">
-      <aside class="filters"><form method="get" action="{{ collection.url }}">
+      <aside class="filters" data-filter-panel><form method="get" action="{{ collection.url }}">
         {% if collection.filters != blank %}
           {% for filter in collection.filters %}
             <div class="filter-group">
@@ -30,7 +30,12 @@
           </div>
         {% endif %}<button class="button button--small" type="submit">Apply filters</button></form></aside>
 
-      <div>
+      <div class="collection-results">
+        <div class="collection-mobile-controls">
+          <button class="button button--secondary button--small" type="button" data-filter-toggle aria-expanded="false">Filter</button>
+          <span>{{ collection.products_count }} products</span>
+          <form class="sort-select" method="get" action="{{ collection.url }}"><label><span class="visually-hidden">{{ 'products.sort_by' | t }}</span><select name="sort_by" data-mobile-sort onchange="this.form.submit()">{% for option in collection.sort_options %}<option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>{% endfor %}</select></label></form>
+        </div>
         <div class="collection-toolbar">
           <p>{{ collection.products_count }} products</p>
           <form class="sort-select" method="get" action="{{ collection.url }}">

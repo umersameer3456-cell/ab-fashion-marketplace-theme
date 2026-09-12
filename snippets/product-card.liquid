@@ -1,4 +1,19 @@
-<article class="product-card{% if featured %} product-card--featured{% endif %}" aria-label="{{ product.title }}">
+{%- liquid
+  assign card_variant = product.selected_or_first_available_variant | default: product.variants.first
+  assign card_rating = product.metafields.custom.rating.value
+  assign card_review_count = product.metafields.custom.review_count.value
+  if card_rating == blank
+    assign card_rating = product.metafields.reviews.rating.value
+  endif
+  if card_review_count == blank
+    assign card_review_count = product.metafields.reviews.review_count.value
+  endif
+  assign discount_percent = 0
+  if card_variant.compare_at_price > card_variant.price
+    assign discount_percent = card_variant.compare_at_price | minus: card_variant.price | times: 100.0 | divided_by: card_variant.compare_at_price | round
+  endif
+-%}
+<article class="product-card{% if featured %} product-card--featured{% endif %}" aria-label="{{ product.title | escape }}">
   <div class="product-card__image-wrap">
     {% if product.featured_image %}
       <img class="product-card__image" src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="600" height="750">
@@ -11,8 +26,8 @@
     <div class="product-card__badge-list">
       {% if product.available == false %}
         <span class="badge badge--sale">{{ 'products.sold_out' | t }}</span>
-      {% elsif product.compare_at_price > product.price %}
-        <span class="badge badge--sale">{{ 'products.sale' | t }}</span>
+      {% elsif discount_percent > 0 %}
+        <span class="badge badge--sale">{{ discount_percent }}% off</span>
       {% endif %}
       {% if product.tags contains 'new' or product.tags contains 'New' %}
         <span class="badge badge--new">{{ 'products.new' | t }}</span>
@@ -25,12 +40,25 @@
   <div class="product-card__body">
     <p class="product-card__vendor">{{ product.type | default: product.vendor }}</p>
     <h3 class="product-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
-    <div class="product-card__price">
-      {% render 'price', product: product %}
-    </div>
+    <div class="product-card__price">{% render 'price', product: product %}</div>
     <div class="product-card__meta">
-      <div class="product-card__rating">{% if product.metafields.reviews.rating.value != blank %}<span aria-label="{{ product.metafields.reviews.rating.value }} out of 5">★★★★★</span><span>{{ product.metafields.reviews.rating.value }}</span>{% endif %}</div>
-      {% if product.available %}{% if product.has_only_default_variant %}<form method="post" action="{{ routes.cart_add_url }}" class="product-card__form" data-quick-add><input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}"><button class="quick-add-btn" type="submit">Quick add</button></form>{% else %}<a class="quick-add-btn" href="{{ product.url }}">Choose options</a>{% endif %}{% else %}<span class="badge">Sold out</span>{% endif %}
+      {% if card_rating != blank %}
+        <div class="product-card__rating" aria-label="{{ card_rating }} out of 5">
+          <span aria-hidden="true">★★★★★</span><span>{{ card_rating }}</span>{% if card_review_count != blank %}<span>({{ card_review_count }})</span>{% endif %}
+        </div>
+      {% endif %}
+      {% if product.available %}
+        {% if product.has_only_default_variant %}
+          <form method="post" action="{{ routes.cart_add_url }}" class="product-card__form" data-quick-add>
+            <input type="hidden" name="id" value="{{ card_variant.id }}">
+            <button class="quick-add-btn" type="submit">Quick add</button>
+          </form>
+        {% else %}
+          <a class="quick-add-btn" href="{{ product.url }}">Choose options</a>
+        {% endif %}
+      {% else %}
+        <span class="badge badge--sold-out">{{ 'products.sold_out' | t }}</span>
+      {% endif %}
     </div>
   </div>
 </article>
