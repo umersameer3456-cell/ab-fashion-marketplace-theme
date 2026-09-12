@@ -39,9 +39,9 @@
         <span class="header-cart__count">{{ cart.item_count }}</span>
       </a>
     </div>
-    <div class="search-bar-wrap"><div class="container"><form action="{{ routes.search_url }}" method="get" role="search" class="search-bar"><label class="visually-hidden" for="HeaderSearch">Search products</label><select name="type" aria-label="Search category"><option value="product">All Categories</option><option value="product">Products</option><option value="article">Articles</option></select><input id="HeaderSearch" type="search" name="q" placeholder="Search products, brands and styles" autocomplete="off"><button type="submit">Search</button></form></div></div>
-    <div class="accent-strip"><div class="container accent-strip__inner"><strong>Shop By Department</strong><nav aria-label="Department navigation">{% for link in linklists[section.settings.department_menu].links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}</nav><span class="accent-strip__utilities"><a href="{{ routes.cart_url }}">Recently viewed</a><a href="{{ routes.cart_url }}">Order tracking</a></span></div></div>
   </div>
+  <div class="search-bar-wrap"><div class="container"><form action="{{ routes.search_url }}" method="get" role="search" class="search-bar"><label class="visually-hidden" for="HeaderSearch">Search products</label><select name="type" aria-label="Search category"><option value="product">All Categories</option><option value="product">Products</option><option value="article">Articles</option></select><input id="HeaderSearch" type="search" name="q" placeholder="Search products, brands and styles" autocomplete="off"><button type="submit">Search</button></form></div></div>
+  <div class="accent-strip"><div class="container accent-strip__inner"><strong>Shop By Department</strong><nav aria-label="Department navigation">{% for link in linklists[section.settings.department_menu].links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}</nav><span class="accent-strip__utilities"><a href="{{ routes.cart_url }}">Recently viewed</a><a href="{{ routes.cart_url }}">Order tracking</a></span></div></div>
 
   <div class="search-modal" data-search-modal aria-hidden="true">
     <div class="search-modal__panel">

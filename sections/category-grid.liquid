@@ -7,12 +7,12 @@
     <div class="category-grid category-grid--scroll">
       {% for block in section.blocks %}
         {% assign category_collection = block.settings.collection %}
-        {% if category_collection != blank %}
-          <a class="category-card" href="{{ category_collection.url }}" {{ block.shopify_attributes }}>
+        {% assign category_url = category_collection.url | default: routes.collections_url | append: '/' | append: block.settings.title | handleize %}
+          <a class="category-card" href="{{ category_url }}" {{ block.shopify_attributes }}>
           <div class="category-card__media">
             {% if block.settings.image != blank %}
               {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.title }}
-            {% elsif category_collection.featured_image != blank %}
+            {% elsif category_collection != blank and category_collection.featured_image != blank %}
               {{ category_collection.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: category_collection.title }}
             {% else %}
               {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -23,7 +23,6 @@
             <span>Shop collection</span>
           </div>
           </a>
-        {% endif %}
       {% endfor %}
     </div>
   </div>
