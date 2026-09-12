@@ -1,0 +1,63 @@
+<section class="section">
+  <div class="container">
+    {% if cart.item_count > 0 %}
+      <div class="section-heading">
+        <h1>{{ 'general.cart.title' | t }}</h1>
+      </div>
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <div class="grid-2" style="align-items:start;">
+          <div class="content-card">
+            {% for item in cart.items %}
+              <div style="display:grid; grid-template-columns: 120px 1fr auto; gap:16px; align-items:center; padding:18px 0; border-bottom:1px solid var(--color-border);">
+                <div style="width:110px; height:110px; border-radius:18px; overflow:hidden; background:#f1eee7;">
+                  {% if item.image %}
+                    <img src="{{ item.image | image_url: width: 220 }}" alt="{{ item.title | escape }}" style="width:100%; height:100%; object-fit:cover;" width="220" height="260">
+                  {% endif %}
+                </div>
+                <div>
+                  <h3 style="margin:0 0 6px; font-size:1.2rem;">{{ item.product.title }}</h3>
+                  <p style="margin:0; color: var(--color-muted);">{{ item.variant.title }}</p>
+                  <div class="quantity-wrap" style="margin-top:12px;">
+                    <button type="button" data-quantity="minus" aria-label="Decrease quantity">−</button>
+                    <input type="number" name="updates[]" value="{{ item.quantity }}" min="1" aria-label="Quantity">
+                    <button type="button" data-quantity="plus" aria-label="Increase quantity">+</button>
+                  </div>
+                </div>
+                <div style="text-align:right;">
+                  <strong>{{ item.final_line_price | money }}</strong>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <aside class="content-card">
+            <h3 style="margin-top:0;">Summary</h3>
+            <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+              <span>Subtotal</span>
+              <strong>{{ cart.total_price | money }}</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:18px;">
+              <span>Shipping</span>
+              <strong>Calculated at checkout</strong>
+            </div>
+            <button type="submit" name="checkout" class="button" style="width:100%;">{{ 'general.cart.checkout' | t }}</button>
+            <a class="button button--secondary" href="{{ routes.all_products_collection_url }}" style="width:100%; margin-top:12px;">{{ 'general.cart.continue_shopping' | t }}</a>
+          </aside>
+        </div>
+      </form>
+    {% else %}
+      <div class="content-card">
+        <h1>{{ 'general.cart.empty' | t }}</h1>
+        <a class="button" href="{{ routes.all_products_collection_url }}">Shop now</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main cart",
+  "settings": [],
+  "presets": [{ "name": "Main cart", "category": "Cart" }]
+}
+{% endschema %}

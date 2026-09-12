@@ -1,0 +1,161 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Luxury for every moment.",
+        "subheading": "Curated designer essentials in fashion, fragrance, watches, and accessories for a refined everyday wardrobe.",
+        "cta_label": "Shop now",
+        "cta_url": "/collections/all",
+        "secondary_label": "New arrivals",
+        "secondary_url": "/collections/all?sort_by=created-descending",
+        "image": "shopify://shop_images/hero-fashion.jpg"
+      }
+    },
+    "categories": {
+      "type": "category-grid",
+      "settings": {
+        "title": "Shop by category",
+        "subtitle": "Curated collections for every style story."
+      }
+    },
+    "new-arrivals": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "New arrivals",
+        "collection": "frontpage",
+        "limit": 4,
+        "layout": "grid"
+      }
+    },
+    "best-sellers": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Best sellers",
+        "collection": "frontpage",
+        "limit": 4,
+        "layout": "grid"
+      }
+    },
+    "promo": {
+      "type": "promo-banner",
+      "settings": {
+        "title": "Seasonal edit",
+        "text": "Discover elevated essentials designed for modern living and unforgettable occasions.",
+        "button_label": "Explore sale",
+        "button_url": "/collections/all?sort_by=price-descending",
+        "background_image": "shopify://shop_images/promo-banner.jpg"
+      }
+    },
+    "trending": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Trending now",
+        "collection": "frontpage",
+        "limit": 4,
+        "layout": "grid"
+      }
+    },
+    "perfumes": {
+      "type": "showcase-card",
+      "settings": {
+        "title": "Perfumes",
+        "description": "Rich, elegant scents crafted to suit every mood and occasion.",
+        "collection": "frontpage",
+        "limit": 4
+      }
+    },
+    "watches": {
+      "type": "showcase-card",
+      "settings": {
+        "title": "Watches",
+        "description": "Precision-crafted timepieces designed with a statement presence.",
+        "collection": "frontpage",
+        "limit": 4
+      }
+    },
+    "clothes": {
+      "type": "showcase-card",
+      "settings": {
+        "title": "Clothes",
+        "description": "Tailored silhouettes and everyday luxury for effortless confidence.",
+        "collection": "frontpage",
+        "limit": 4
+      }
+    },
+    "bags": {
+      "type": "showcase-card",
+      "settings": {
+        "title": "Bags",
+        "description": "Polished carryalls and statement pieces that complete your look.",
+        "collection": "frontpage",
+        "limit": 4
+      }
+    },
+    "shoes": {
+      "type": "showcase-card",
+      "settings": {
+        "title": "Shoes",
+        "description": "Refined footwear for city days, evenings out, and every step in between.",
+        "collection": "frontpage",
+        "limit": 4
+      }
+    },
+    "accessories": {
+      "type": "showcase-card",
+      "settings": {
+        "title": "Accessories",
+        "description": "Finishing touches that elevate classic and contemporary styling.",
+        "collection": "frontpage",
+        "limit": 4
+      }
+    },
+    "why-choose": {
+      "type": "why-choose",
+      "settings": {
+        "title": "Why choose AB FASHION"
+      }
+    },
+    "brand-story": {
+      "type": "brand-story",
+      "settings": {
+        "title": "Brand story",
+        "text": "AB FASHION brings together elevated design, conscious craftsmanship, and timeless luxury for the modern wardrobe.",
+        "button_label": "Read our story",
+        "button_url": "/pages/about-us"
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {
+        "title": "Customer reviews"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "title": "Stay in style",
+        "text": "Subscribe for first access to new collections, exclusive sales, and style inspiration.",
+        "button_label": "Join now"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "categories",
+    "new-arrivals",
+    "best-sellers",
+    "promo",
+    "trending",
+    "perfumes",
+    "watches",
+    "clothes",
+    "bags",
+    "shoes",
+    "accessories",
+    "why-choose",
+    "brand-story",
+    "reviews",
+    "newsletter"
+  ]
+}

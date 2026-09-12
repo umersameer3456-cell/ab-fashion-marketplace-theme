@@ -1,0 +1,35 @@
+<section class="section">
+  <div class="container">
+    {% if search.performed %}
+      <div class="section-heading">
+        <h1>Search results for “{{ search.terms }}”</h1>
+        <p>{{ search.results_count }} products found</p>
+      </div>
+
+      {% if search.results.size > 0 %}
+        <div class="product-grid">
+          {% for product in search.results %}
+            {% render 'product-card', product: product %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="content-card">
+          <p>No products matched your search. Try another keyword or browse our collections.</p>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="section-heading">
+        <h1>Search</h1>
+        <p>Find products by keyword, category, or style.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main search",
+  "settings": [],
+  "presets": [{ "name": "Main search", "category": "Search" }]
+}
+{% endschema %}

@@ -1,0 +1,16 @@
+{% if section.settings.enable %}
+  <div class="announcement-bar" role="status" aria-live="polite">
+    {{ section.settings.text | default: settings.announcement_text }}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    { "type": "checkbox", "id": "enable", "label": "Enable announcement bar", "default": true },
+    { "type": "text", "id": "text", "label": "Announcement text", "default": "Free shipping on orders over $150" }
+  ],
+  "presets": [{ "name": "Announcement bar", "category": "Header" }]
+}
+{% endschema %}

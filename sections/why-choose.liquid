@@ -1,0 +1,39 @@
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <h2>{{ section.settings.title }}</h2>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card__icon">✦</div>
+        <h3>Luxury quality</h3>
+        <p>Premium craftsmanship across our curated collection of designer essentials.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card__icon">⚡</div>
+        <h3>Fast shipping</h3>
+        <p>Quick dispatch and reliable delivery for orders from our boutique collection.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card__icon">✓</div>
+        <h3>Secure checkout</h3>
+        <p>Shop confidently with safe payment experiences powered by Shopify checkout.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card__icon">☰</div>
+        <h3>Stylist support</h3>
+        <p>Expert guidance to help you choose elevated pieces that fit your lifestyle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Why choose AB FASHION",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Why choose AB FASHION" }
+  ],
+  "presets": [{ "name": "Why choose AB FASHION", "category": "Homepage" }]
+}
+{% endschema %}

@@ -1,0 +1,113 @@
+{% assign selected_variant = product.selected_or_first_available_variant %}
+<section class="section product-page">
+  <div class="container">
+    <nav aria-label="Breadcrumb" class="breadcrumbs" style="margin-bottom:24px; color: var(--color-muted);">
+      <a href="{{ routes.root_url }}">Home</a> /
+      <a href="{{ routes.all_products_collection_url }}">Shop</a> /
+      <span>{{ product.title }}</span>
+    </nav>
+
+    <div class="product-main">
+      <div class="product-gallery">
+        <div class="product-gallery__thumbs">
+          {% for media in product.media %}
+            {% if media.preview_image %}
+              <div class="product-gallery__thumb {% if forloop.first %}is-active{% endif %}">
+                <img src="{{ media.preview_image | image_url: width: 180 }}" alt="{{ media.preview_image.alt | escape }}" loading="lazy" width="180" height="200">
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="product-gallery__main">
+          {% if product.featured_image %}
+            <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="1200" height="1500">
+          {% else %}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="product-details">
+        <div class="product-details__meta">
+          <span style="text-transform:uppercase; letter-spacing:0.08em; color: var(--color-muted);">{{ product.vendor }}</span>
+          <span class="product-card__rating">★★★★★ <span>4.9</span></span>
+        </div>
+        <h1 class="product-title">{{ product.title }}</h1>
+
+        <div class="product-price">
+          {% if selected_variant.compare_at_price > selected_variant.price %}
+            <span class="price">{{ selected_variant.price | money }}</span>
+            <span class="product-card__compare">{{ selected_variant.compare_at_price | money }}</span>
+          {% else %}
+            <span class="price">{{ selected_variant.price | money }}</span>
+          {% endif %}
+        </div>
+
+        {% form 'product', product, class: 'product-form', id: 'ProductForm' %}
+          {% if product.variants.size > 1 %}
+            <div class="variant-selector">
+              <div class="variant-selector__label">
+                <strong>Choose a variant</strong>
+                <span>{{ product.options.size }} options</span>
+              </div>
+              <select name="id" aria-label="Variant selector">
+                {% for variant in product.variants %}
+                  <option value="{{ variant.id }}" {% if variant.id == selected_variant.id %}selected{% endif %}>
+                    {{ variant.title }}{% unless variant.available %} - Sold out{% endunless %}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          {% else %}
+            <input type="hidden" name="id" value="{{ selected_variant.id }}">
+          {% endif %}
+
+          <div class="quantity-wrap">
+            <button type="button" data-quantity="minus" aria-label="Decrease quantity">−</button>
+            <input type="number" name="quantity" value="1" min="1" aria-label="Quantity">
+            <button type="button" data-quantity="plus" aria-label="Increase quantity">+</button>
+          </div>
+
+          <div class="product-form__actions">
+            <button class="button" type="submit" {% unless selected_variant.available %}disabled{% endunless %}>
+              {% if selected_variant.available %}{{ 'products.add_to_cart' | t }}{% else %}{{ 'products.sold_out' | t }}{% endif %}
+            </button>
+            <a class="button button--secondary" href="{{ routes.cart_url }}">Buy now</a>
+          </div>
+        {% endform %}
+
+        <ul class="product-info-list">
+          <li><span>Availability</span><strong>{% if selected_variant.available %}In stock{% else %}<span class="soldout">Sold out</span>{% endif %}</strong></li>
+          <li><span>Shipping</span><strong>Free over $150</strong></li>
+          <li><span>Returns</span><strong>30-day returns</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    {% if product.description != blank %}
+      <div class="grid-2" style="margin-top:32px;">
+        <div class="content-card">
+          <h2 style="margin-top:0;">Description</h2>
+          <div>{{ product.description }}</div>
+        </div>
+        <div class="content-card">
+          <h2 style="margin-top:0;">Specifications</h2>
+          <ul>
+            <li>Material: {{ product.metafields.custom.material | default: 'Premium craftsmanship' }}</li>
+            <li>Vendor: {{ product.vendor }}</li>
+            <li>Type: {{ product.type }}</li>
+            <li>SKU: {{ selected_variant.sku | default: 'N/A' }}</li>
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main product",
+  "settings": [],
+  "presets": [{ "name": "Main product", "category": "Product" }]
+}
+{% endschema %}

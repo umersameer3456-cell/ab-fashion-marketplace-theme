@@ -1,0 +1,33 @@
+<section class="section">
+  <div class="container">
+    <div class="grid-2" style="align-items:center;">
+      <div class="content-card">
+        <div class="section-heading" style="margin-bottom:16px;">
+          <h2>{{ section.settings.title }}</h2>
+        </div>
+        <p>{{ section.settings.text }}</p>
+        {% if section.settings.button_label != blank and section.settings.button_url != blank %}
+          <a class="button" href="{{ section.settings.button_url }}">{{ section.settings.button_label }}</a>
+        {% endif %}
+      </div>
+      <div class="category-card">
+        <div class="category-card__media">
+          {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand story",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Brand story" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "AB FASHION brings together elevated design, conscious craftsmanship, and timeless luxury for the modern wardrobe." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Read our story" },
+    { "type": "url", "id": "button_url", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Brand story", "category": "Homepage" }]
+}
+{% endschema %}

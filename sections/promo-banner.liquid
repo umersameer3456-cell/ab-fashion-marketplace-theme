@@ -1,0 +1,27 @@
+<section class="section">
+  <div class="container">
+    <div class="promo-banner" style="background-image: linear-gradient(135deg, rgba(35,31,27,0.92), rgba(95,77,60,0.82) 45%, rgba(212,165,107,0.85)), url('{{ section.settings.background_image | image_url: width: 1600 }}'); background-size: cover; background-position: center;">
+      <div>
+        <h3>{{ section.settings.title }}</h3>
+        {% if section.settings.text != blank %}<p>{{ section.settings.text }}</p>{% endif %}
+      </div>
+      {% if section.settings.button_label != blank and section.settings.button_url != blank %}
+        <a class="button button--accent" href="{{ section.settings.button_url }}">{{ section.settings.button_label }}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo banner",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Seasonal edit" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Discover elevated essentials designed for modern living and unforgettable occasions." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore sale" },
+    { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" }
+  ],
+  "presets": [{ "name": "Promo banner", "category": "Homepage" }]
+}
+{% endschema %}

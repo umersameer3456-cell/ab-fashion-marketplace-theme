@@ -1,0 +1,60 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="{{ routes.root_url }}" class="brand" style="color:#fff;">
+          <span class="brand__mark">AF</span>
+          <span>AB FASHION</span>
+        </a>
+        <p style="margin-top:20px;">Luxury essentials for every day and every occasion, curated with elevated design and premium craftsmanship.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul class="footer-link-list">
+          {% if linklists[section.settings.menu].links != blank %}
+            {% for link in linklists[section.settings.menu].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          {% else %}
+            <li><a href="{{ routes.all_products_collection_url }}">Shop all</a></li>
+            <li><a href="{{ routes.collections_url }}/perfumes">Perfumes</a></li>
+            <li><a href="{{ routes.collections_url }}/watches">Watches</a></li>
+            <li><a href="{{ routes.collections_url }}/clothes">Clothes</a></li>
+          {% endif %}
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul class="footer-link-list">
+          <li><a href="/pages/about-us">About</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+          <li><a href="/pages/faq">FAQ</a></li>
+          <li><a href="/pages/returns">Returns</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul class="footer-link-list">
+          <li><a href="{{ routes.account_url }}">Account</a></li>
+          <li><a href="{{ routes.search_url }}">Search</a></li>
+          <li><a href="{{ routes.cart_url }}">Cart</a></li>
+          <li><a href="{{ routes.root_url }}policies">Policies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} AB FASHION</span>
+      <span>Powered by Shopify</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Footer menu" }
+  ],
+  "presets": [{ "name": "Footer", "category": "Footer" }]
+}
+{% endschema %}

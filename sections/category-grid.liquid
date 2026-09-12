@@ -1,0 +1,50 @@
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <h2>{{ section.settings.title }}</h2>
+      {% if section.settings.subtitle != blank %}<p>{{ section.settings.subtitle }}</p>{% endif %}
+    </div>
+    <div class="grid-3">
+      {% assign categories = 'perfumes,watches,clothes,bags,shoes,accessories' | split: ',' %}
+      {% for category in categories %}
+        {% assign collection_handle = category %}
+        {% assign category_collection = collections[collection_handle] %}
+        {% if category_collection == blank %}
+          {% assign category_collection = collections.all %}
+        {% endif %}
+        <a class="category-card" href="{{ category_collection.url | default: '/collections/all' }}">
+          <div class="category-card__media">
+            {% if category == 'perfumes' %}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% elsif category == 'watches' %}
+              {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% elsif category == 'clothes' %}
+              {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% elsif category == 'bags' %}
+              {{ 'product-bag' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% elsif category == 'shoes' %}
+              {{ 'product-shoe' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% else %}
+              {{ 'product-accessory' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+          <div class="category-card__content">
+            <h3>{{ category | replace: '-', ' ' | capitalize }}</h3>
+            <p>Explore the latest {{ category | replace: '-', ' ' | capitalize | downcase }} collection.</p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category grid",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Shop by category" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Discover our curated essentials" }
+  ],
+  "presets": [{ "name": "Shop by category", "category": "Homepage" }]
+}
+{% endschema %}

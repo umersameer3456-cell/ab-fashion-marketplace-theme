@@ -1,0 +1,54 @@
+[
+  {
+    "name": "AB Fashion",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "default": "#1a1a1a"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent color",
+        "default": "#c7a36a"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background color",
+        "default": "#f6f3ef"
+      },
+      {
+        "type": "color",
+        "id": "color_card",
+        "label": "Card background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text color",
+        "default": "#191919"
+      },
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement text",
+        "default": "Free shipping on orders over $150"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_title",
+        "label": "Newsletter title",
+        "default": "Stay in style"
+      }
+    ]
+  }
+]

@@ -1,0 +1,44 @@
+<article class="product-card" aria-label="{{ product.title }}">
+  <div class="product-card__image-wrap">
+    {% if product.featured_image %}
+      <img class="product-card__image" src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="600" height="750">
+      {% if product.images[1] %}
+        <img class="product-card__image product-card__image--second" src="{{ product.images[1] | image_url: width: 600 }}" alt="{{ product.images[1].alt | escape }}" loading="lazy" width="600" height="750">
+      {% endif %}
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {% endif %}
+    <div class="product-card__badge-list">
+      {% if product.available == false %}
+        <span class="badge badge--sale">{{ 'products.sold_out' | t }}</span>
+      {% elsif product.compare_at_price > product.price %}
+        <span class="badge badge--sale">{{ 'products.sale' | t }}</span>
+      {% endif %}
+      {% if product.tags contains 'new' or product.tags contains 'New' %}
+        <span class="badge badge--new">{{ 'products.new' | t }}</span>
+      {% endif %}
+    </div>
+    <button class="product-card__heart" type="button" aria-label="{{ 'general.wishlist.title' | t }}">
+      {% render 'icon-heart' %}
+    </button>
+  </div>
+  <div class="product-card__body">
+    <p class="product-card__vendor">{{ product.vendor }}</p>
+    <h3 class="product-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    <div class="product-card__price">
+      {% render 'price', product: product %}
+    </div>
+    <div class="product-card__meta">
+      <div class="product-card__rating">
+        <span>★★★★★</span>
+        <span>4.9</span>
+      </div>
+      <form method="post" action="{{ routes.cart_add_url }}" class="product-card__form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button class="quick-add-btn" type="submit" {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+          {{ 'products.quick_add' | t }}
+        </button>
+      </form>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,60 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <button class="icon-button mobile-menu" type="button" data-menu-toggle aria-label="Open menu">
+      {% render 'icon-menu' %}
+    </button>
+
+    <a href="{{ routes.root_url }}" class="brand" aria-label="{{ shop.name }}">
+      <span class="brand__mark">AF</span>
+      <span>AB FASHION</span>
+    </a>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      {% if linklists[section.settings.menu].links == blank %}
+        <a href="{{ routes.all_products_collection_url }}">Shop</a>
+        <a href="{{ routes.collections_url }}/perfumes">Perfumes</a>
+        <a href="{{ routes.collections_url }}/watches">Watches</a>
+        <a href="{{ routes.collections_url }}/clothes">Clothes</a>
+        <a href="{{ routes.collections_url }}/bags">Bags</a>
+        <a href="{{ routes.collections_url }}/shoes">Shoes</a>
+        <a href="{{ routes.collections_url }}/accessories">Accessories</a>
+      {% else %}
+        {% for link in linklists[section.settings.menu].links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      {% endif %}
+    </nav>
+
+    <div class="header-tools">
+      <button class="icon-button" type="button" data-search-toggle aria-label="Search">
+        {% render 'icon-search' %}
+      </button>
+      <a class="icon-button" href="{{ routes.account_url }}" aria-label="Account">
+        {% render 'icon-user' %}
+      </a>
+      <a class="icon-button header-cart" href="{{ routes.cart_url }}" aria-label="Cart">
+        {% render 'icon-cart' %}
+        <span class="header-cart__count">{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="search-modal" data-search-modal aria-hidden="true">
+    <div class="search-modal__panel">
+      <form action="{{ routes.search_url }}" method="get" class="search-form" role="search">
+        <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.title' | t }}">
+        <button class="button" type="submit">{{ 'general.search.submit' | t }}</button>
+      </form>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Main menu" }
+  ],
+  "presets": [{ "name": "Header", "category": "Header" }]
+}
+{% endschema %}

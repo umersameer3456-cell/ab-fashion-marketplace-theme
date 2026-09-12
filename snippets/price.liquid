@@ -1,0 +1,11 @@
+{%- if product -%}
+  {%- assign current_variant = product.selected_or_first_available_variant | default: product.variants.first -%}
+  {%- if current_variant.compare_at_price > current_variant.price -%}
+    <span class="price">{{ current_variant.price | money }}</span>
+    <span class="product-card__compare">{{ current_variant.compare_at_price | money }}</span>
+  {%- else -%}
+    <span class="price">{{ current_variant.price | money }}</span>
+  {%- endif -%}
+{%- else -%}
+  <span class="price">{{ money_price }}</span>
+{%- endif -%}
