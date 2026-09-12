@@ -4,35 +4,26 @@
       <h2>{{ section.settings.title }}</h2>
       {% if section.settings.subtitle != blank %}<p>{{ section.settings.subtitle }}</p>{% endif %}
     </div>
-    <div class="grid-3">
-      {% assign categories = 'perfumes,watches,clothes,bags,shoes,accessories' | split: ',' %}
-      {% for category in categories %}
-        {% assign collection_handle = category %}
-        {% assign category_collection = collections[collection_handle] %}
-        {% if category_collection == blank %}
-          {% assign category_collection = collections.all %}
-        {% endif %}
-        <a class="category-card" href="{{ category_collection.url | default: '/collections/all' }}">
+    <div class="category-grid">
+      {% for block in section.blocks %}
+        {% assign category_collection = block.settings.collection %}
+        {% if category_collection != blank %}
+          <a class="category-card" href="{{ category_collection.url }}" {{ block.shopify_attributes }}>
           <div class="category-card__media">
-            {% if category == 'perfumes' %}
-              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-            {% elsif category == 'watches' %}
-              {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
-            {% elsif category == 'clothes' %}
-              {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
-            {% elsif category == 'bags' %}
-              {{ 'product-bag' | placeholder_svg_tag: 'placeholder-svg' }}
-            {% elsif category == 'shoes' %}
-              {{ 'product-shoe' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.title }}
+            {% elsif category_collection.featured_image != blank %}
+              {{ category_collection.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: category_collection.title }}
             {% else %}
-              {{ 'product-accessory' | placeholder_svg_tag: 'placeholder-svg' }}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
             {% endif %}
           </div>
           <div class="category-card__content">
-            <h3>{{ category | replace: '-', ' ' | capitalize }}</h3>
-            <p>Explore the latest {{ category | replace: '-', ' ' | capitalize | downcase }} collection.</p>
+            <h3>{{ block.settings.title | default: category_collection.title }}</h3>
+            <span>Shop collection</span>
           </div>
-        </a>
+          </a>
+        {% endif %}
       {% endfor %}
     </div>
   </div>
@@ -45,6 +36,18 @@
     { "type": "text", "id": "title", "label": "Heading", "default": "Shop by category" },
     { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Discover our curated essentials" }
   ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Category image" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
   "presets": [{ "name": "Shop by category", "category": "Homepage" }]
 }
 {% endschema %}

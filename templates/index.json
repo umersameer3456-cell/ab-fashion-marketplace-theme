@@ -2,11 +2,12 @@
   "sections": {
     "hero": {"type":"hero","settings":{"heading":"Elevate your style","subheading":"Discover premium fashion, fragrances and accessories for every occasion.","cta_label":"Shop now","cta_url":"/collections/all","secondary_label":"Explore collections","secondary_url":"/collections/all"}},
     "benefits": {"type":"benefits","blocks":{"one":{"type":"benefit","settings":{"title":"Free shipping on orders over $150"}},"two":{"type":"benefit","settings":{"title":"Easy 30-day returns"}},"three":{"type":"benefit","settings":{"title":"24/7 customer support"}}},"block_order":["one","two","three"]},
+    "categories": {"type":"category-grid","blocks":{"perfumes":{"type":"category","settings":{"title":"Perfumes"}},"watches":{"type":"category","settings":{"title":"Watches"}},"clothes":{"type":"category","settings":{"title":"Clothes"}},"bags":{"type":"category","settings":{"title":"Bags"}},"shoes":{"type":"category","settings":{"title":"Shoes"}},"accessories":{"type":"category","settings":{"title":"Accessories"}}},"block_order":["perfumes","watches","clothes","bags","shoes","accessories"],"settings":{"title":"Shop by category","subtitle":"Explore our curated fashion collections"}},
     "featured": {"type":"featured-collection","settings":{"title":"Featured products","collection":"frontpage","limit":4}},
     "promo": {"type":"promo-banner","settings":{"title":"Refine your everyday style","text":"Discover timeless fashion pieces designed for every occasion.","button_label":"Browse collection","button_url":"/collections/all"}},
     "new": {"type":"showcase-card","settings":{"title":"New arrivals","collection":"new-arrivals","button_label":"Shop new"}},
     "best": {"type":"showcase-card","settings":{"title":"Best sellers","collection":"best-sellers","button_label":"Shop best sellers"}},
     "newsletter": {"type":"newsletter","settings":{"title":"Join our newsletter","text":"Get the latest arrivals, exclusive offers and fashion updates.","button_label":"Subscribe"}}
   },
-  "order":["hero","benefits","featured","promo","new","best","newsletter"]
+  "order":["hero","benefits","categories","featured","promo","new","best","newsletter"]
 }
