@@ -1,0 +1,5 @@
+{% assign featured = section.settings.featured_product %}
+<section class="section trending"><div class="container"><div class="section-heading section-heading--row"><h2>{{ section.settings.heading }}</h2><a href="{{ routes.all_products_collection_url }}">View all →</a></div><div class="trending-layout"><div class="trending-side">{% assign side_collection = section.settings.collection | default: collections.all %}{% for product in side_collection.products limit: 2 %}{% render 'product-card', product: product %}{% endfor %}</div>{% if featured != blank %}<div class="trending-featured">{% render 'product-card', product: featured, featured: true %}</div>{% endif %}<div class="trending-side">{% for product in side_collection.products offset: 2 limit: 2 %}{% render 'product-card', product: product %}{% endfor %}</div></div></div></section>
+{% schema %}
+{"name":"Trending this week","settings":[{"type":"text","id":"heading","label":"Heading","default":"Trending This Week"},{"type":"collection","id":"collection","label":"Side products"},{"type":"product","id":"featured_product","label":"Featured product"}],"presets":[{"name":"Trending this week"}]}
+{% endschema %}

@@ -11,14 +11,14 @@
 <section class="section" style="padding-top: 0;">
   <div class="container">
     <div class="collection-layout">
-      <aside class="filters">
+      <aside class="filters"><form method="get" action="{{ collection.url }}">
         {% if collection.filters != blank %}
           {% for filter in collection.filters %}
             <div class="filter-group">
               <h4>{{ filter.label }}</h4>
               {% for filter_value in filter.values %}
                 {% if filter_value.count > 0 %}
-                  <a href="{{ filter_value.url }}">{{ filter_value.label }} ({{ filter_value.count }})</a>
+                  <label><input type="checkbox" name="{{ filter.param_name }}" value="{{ filter_value.value }}" {% if filter_value.active %}checked{% endif %} onchange="this.form.submit()"> {{ filter_value.label }} ({{ filter_value.count }})</label>
                 {% endif %}
               {% endfor %}
             </div>
@@ -28,8 +28,7 @@
             <h4>Collection</h4>
             <a href="{{ collection.url }}">All products</a>
           </div>
-        {% endif %}
-      </aside>
+        {% endif %}<button class="button button--small" type="submit">Apply filters</button></form></aside>
 
       <div>
         <div class="collection-toolbar">

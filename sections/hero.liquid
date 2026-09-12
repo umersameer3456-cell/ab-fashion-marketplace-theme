@@ -1,49 +1,29 @@
-<section class="section hero">
-  <div class="container hero__inner">
-    <div class="hero__copy">
-      {% if section.settings.eyebrow != blank %}
-        <span class="hero__eyebrow">{{ section.settings.eyebrow }}</span>
-      {% endif %}
-      <h1>{{ section.settings.heading }}</h1>
-      {% if section.settings.subheading != blank %}
-        <p>{{ section.settings.subheading }}</p>
-      {% endif %}
-      <div class="hero__actions">
-        {% if section.settings.cta_label != blank and section.settings.cta_url != blank %}
-          <a class="button" href="{{ section.settings.cta_url }}">{{ section.settings.cta_label }}</a>
-        {% endif %}
-        {% if section.settings.secondary_label != blank and section.settings.secondary_url != blank %}
-          <a class="button button--secondary" href="{{ section.settings.secondary_url }}">{{ section.settings.secondary_label }}</a>
-        {% endif %}
-      </div>
-    </div>
-    <div class="hero__visual">
-      {% assign hero_image = section.settings.image %}
-      {% if section.settings.mobile_image != blank and request.design_mode == false %}
-        <picture><source media="(max-width: 600px)" srcset="{{ section.settings.mobile_image | image_url: width: 900 }}">{{ hero_image | image_url: width: 1400 | image_tag: alt: section.settings.heading, loading: 'eager' }}</picture>
-      {% elsif hero_image != blank %}
-        {{ hero_image | image_url: width: 1400 | image_tag: alt: section.settings.heading, loading: 'eager' }}
-      {% else %}
-        {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
-      {% endif %}
-    </div>
-  </div>
+<section class="hero hero-slider" data-slider data-autoplay="{{ section.settings.autoplay }}">
+  {% for block in section.blocks %}
+    <article class="hero-slide{% if forloop.first %} is-active{% endif %}" data-slide {{ block.shopify_attributes }}>
+      <div class="hero-slide__media">{% if block.settings.image != blank %}<picture>{% if block.settings.mobile_image != blank %}<source media="(max-width: 749px)" srcset="{{ block.settings.mobile_image | image_url: width: 900 }}">{% endif %}{{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', alt: block.settings.heading }}</picture>{% else %}{{ 'lifestyle-2' | placeholder_svg_tag }}{% endif %}</div>
+      <div class="container hero-slide__content hero-slide__content--{{ block.settings.position }}"><span class="hero__eyebrow">{{ block.settings.eyebrow }}</span><h1>{{ block.settings.heading }}</h1><p>{{ block.settings.subheading }}</p>{% if block.settings.offer != blank %}<strong class="hero-slide__offer">{{ block.settings.offer }}</strong>{% endif %}<a class="button" href="{{ block.settings.button_link | default: routes.all_products_collection_url }}">{{ block.settings.button_label }}</a></div>
+    </article>
+  {% endfor %}
+  {% if section.blocks.size > 1 %}<button class="slider-arrow slider-arrow--prev" type="button" data-slide-prev aria-label="Previous slide">‹</button><button class="slider-arrow slider-arrow--next" type="button" data-slide-next aria-label="Next slide">›</button><div class="slider-dots">{% for block in section.blocks %}<button type="button" data-slide-dot="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>{% endfor %}</div>{% endif %}
 </section>
 
 {% schema %}
 {
   "name": "Hero banner",
-  "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Curated luxury" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Luxury for every moment." },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Curated designer essentials in fashion, fragrance, watches, and accessories for a refined everyday wardrobe." },
-    { "type": "text", "id": "cta_label", "label": "Primary button label", "default": "Shop now" },
-    { "type": "url", "id": "cta_url", "label": "Primary button link" },
-    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "New arrivals" },
-    { "type": "url", "id": "secondary_url", "label": "Secondary button link" },
-    { "type": "image_picker", "id": "image", "label": "Hero image" }
-    ,{ "type": "image_picker", "id": "mobile_image", "label": "Mobile image" }
-  ],
+  "settings": [{ "type": "checkbox", "id": "autoplay", "label": "Autoplay slides", "default": true }],
+  "blocks": [{ "type": "slide", "name": "Slide", "settings": [
+    { "type": "image_picker", "id": "image", "label": "Desktop image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AB FASHION EDIT" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Define your style" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Discover premium fashion, fragrances and accessories." },
+    { "type": "text", "id": "offer", "label": "Offer text", "default": "Starting from $49" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "select", "id": "position", "label": "Text position", "options": [{"value":"left","label":"Left"},{"value":"center","label":"Center"},{"value":"right","label":"Right"}], "default":"left" }
+  ] }],
+  "max_blocks": 6,
   "presets": [{ "name": "Hero banner", "category": "Homepage" }]
 }
 {% endschema %}

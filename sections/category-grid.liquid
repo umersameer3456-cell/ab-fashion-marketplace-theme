@@ -4,7 +4,7 @@
       <h2>{{ section.settings.title }}</h2>
       {% if section.settings.subtitle != blank %}<p>{{ section.settings.subtitle }}</p>{% endif %}
     </div>
-    <div class="category-grid">
+    <div class="category-grid category-grid--scroll">
       {% for block in section.blocks %}
         {% assign category_collection = block.settings.collection %}
         {% if category_collection != blank %}
@@ -47,7 +47,7 @@
       ]
     }
   ],
-  "max_blocks": 6,
+  "max_blocks": 12,
   "presets": [{ "name": "Shop by category", "category": "Homepage" }]
 }
 {% endschema %}

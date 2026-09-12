@@ -1,13 +1,13 @@
 {
   "sections": {
-    "hero": {"type":"hero","settings":{"heading":"Elevate your style","subheading":"Discover premium fashion, fragrances and accessories for every occasion.","cta_label":"Shop now","cta_url":"/collections/all","secondary_label":"Explore collections","secondary_url":"/collections/all"}},
-    "benefits": {"type":"benefits","blocks":{"one":{"type":"benefit","settings":{"title":"Free shipping on orders over $150"}},"two":{"type":"benefit","settings":{"title":"Easy 30-day returns"}},"three":{"type":"benefit","settings":{"title":"24/7 customer support"}}},"block_order":["one","two","three"]},
-    "categories": {"type":"category-grid","blocks":{"perfumes":{"type":"category","settings":{"title":"Perfumes"}},"watches":{"type":"category","settings":{"title":"Watches"}},"clothes":{"type":"category","settings":{"title":"Clothes"}},"bags":{"type":"category","settings":{"title":"Bags"}},"shoes":{"type":"category","settings":{"title":"Shoes"}},"accessories":{"type":"category","settings":{"title":"Accessories"}}},"block_order":["perfumes","watches","clothes","bags","shoes","accessories"],"settings":{"title":"Shop by category","subtitle":"Explore our curated fashion collections"}},
-    "featured": {"type":"featured-collection","settings":{"title":"Featured products","collection":"frontpage","limit":4}},
-    "promo": {"type":"promo-banner","settings":{"title":"Refine your everyday style","text":"Discover timeless fashion pieces designed for every occasion.","button_label":"Browse collection","button_url":"/collections/all"}},
-    "new": {"type":"showcase-card","settings":{"title":"New arrivals","collection":"new-arrivals","button_label":"Shop new"}},
-    "best": {"type":"showcase-card","settings":{"title":"Best sellers","collection":"best-sellers","button_label":"Shop best sellers"}},
-    "newsletter": {"type":"newsletter","settings":{"title":"Join our newsletter","text":"Get the latest arrivals, exclusive offers and fashion updates.","button_label":"Subscribe"}}
+    "hero": {"type":"hero","blocks":{"one":{"type":"slide","settings":{"heading":"Define your style","subheading":"Discover premium fashion, fragrances and accessories.","offer":"Starting from $49"}},"two":{"type":"slide","settings":{"heading":"The new season edit","subheading":"Elevated essentials made for every occasion.","offer":"Fresh arrivals"}}},"block_order":["one","two"],"settings":{"autoplay":true}},
+    "benefits": {"type":"benefits","blocks":{"one":{"type":"benefit","settings":{"title":"Free shipping on orders over $150"}},"two":{"type":"benefit","settings":{"title":"Easy 30-day returns"}},"three":{"type":"benefit","settings":{"title":"Secure checkout"}}},"block_order":["one","two","three"]},
+    "categories": {"type":"category-grid","blocks":{"perfumes":{"type":"category","settings":{"title":"Perfumes"}},"watches":{"type":"category","settings":{"title":"Watches"}},"clothes":{"type":"category","settings":{"title":"Clothes"}},"bags":{"type":"category","settings":{"title":"Bags"}},"shoes":{"type":"category","settings":{"title":"Shoes"}},"accessories":{"type":"category","settings":{"title":"Accessories"}},"men":{"type":"category","settings":{"title":"Men's Fashion"}},"women":{"type":"category","settings":{"title":"Women's Fashion"}}},"block_order":["perfumes","watches","clothes","bags","shoes","accessories","men","women"],"settings":{"title":"Shop by category","subtitle":"Explore fashion, fragrance and accessories"}},
+    "promos": {"type":"promo-cards","blocks":{"one":{"type":"card","settings":{"kicker":"NEW COLLECTION","heading":"Discover the latest fashion"}},"two":{"type":"card","settings":{"kicker":"NEW ARRIVALS","heading":"Fresh styles for every occasion"}},"three":{"type":"card","settings":{"kicker":"TOP SELLERS","heading":"Most-loved fashion picks"}}},"block_order":["one","two","three"]},
+    "deals": {"type":"featured-deals","settings":{"heading":"Today's Featured Deals","limit":6}},
+    "trending": {"type":"trending-products","settings":{"heading":"Trending This Week"}},
+    "newsletter": {"type":"newsletter","settings":{"title":"Join AB FASHION","text":"Get new arrivals and private offers in your inbox.","button_label":"Subscribe"}},
+    "discount": {"type":"discount-banner","settings":{"heading":"Instant fashion discount","text":"Refresh your wardrobe with premium styles.","button_label":"Shop sale"}}
   },
-  "order":["hero","benefits","categories","featured","promo","new","best","newsletter"]
+  "order":["hero","benefits","categories","promos","deals","trending","newsletter","discount"]
 }

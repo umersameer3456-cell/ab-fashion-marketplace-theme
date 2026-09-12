@@ -1,44 +1,5 @@
-document.addEventListener('DOMContentLoaded', function () {
-  var menuToggle = document.querySelector('[data-menu-toggle]');
-  var searchToggle = document.querySelector('[data-search-toggle]');
-  var searchModal = document.querySelector('[data-search-modal]');
-  var cartToggle = document.querySelector('[data-cart-toggle]');
-  var miniCart = document.querySelector('[data-mini-cart]');
-
-  if (menuToggle) {
-    menuToggle.addEventListener('click', function () {
-      document.body.classList.toggle('menu-open');
-    });
-  }
-
-  if (searchToggle && searchModal) {
-    searchToggle.addEventListener('click', function () {
-      searchModal.classList.toggle('is-open');
-      searchModal.setAttribute('aria-hidden', String(!searchModal.classList.contains('is-open')));
-      if (searchModal.classList.contains('is-open')) {
-        var input = searchModal.querySelector('input[type="search"]');
-        if (input) { input.focus(); }
-      }
-    });
-    searchModal.addEventListener('click', function (event) {
-      if (event.target === searchModal) {
-        searchModal.classList.remove('is-open');
-      }
-    });
-  }
-
-  if (cartToggle && miniCart) {
-    cartToggle.addEventListener('click', function () {
-      miniCart.classList.toggle('is-open');
-    });
-  }
-
-  document.querySelectorAll('.quantity-wrap button[data-quantity]').forEach(function (button) {
-    button.addEventListener('click', function () {
-      var input = button.parentElement.querySelector('input');
-      var current = parseInt(input.value || '1', 10);
-      var next = button.dataset.quantity === 'plus' ? current + 1 : Math.max(1, current - 1);
-      input.value = next;
-    });
-  });
+document.addEventListener('DOMContentLoaded',function(){var menu=document.querySelector('[data-menu-toggle]');if(menu)menu.addEventListener('click',function(){document.body.classList.toggle('menu-open');});
+document.querySelectorAll('[data-slider]').forEach(function(slider){var slides=[].slice.call(slider.querySelectorAll('[data-slide]')),dots=[].slice.call(slider.querySelectorAll('[data-slide-dot]')),current=0;function show(i){current=(i+slides.length)%slides.length;slides.forEach(function(s,n){s.classList.toggle('is-active',n===current);});dots.forEach(function(d,n){d.classList.toggle('is-active',n===current);});}slider.querySelector('[data-slide-prev]')?.addEventListener('click',function(){show(current-1);});slider.querySelector('[data-slide-next]')?.addEventListener('click',function(){show(current+1);});dots.forEach(function(d){d.addEventListener('click',function(){show(Number(d.dataset.slideDot));});});show(0);if(slider.dataset.autoplay==='true'&&slides.length>1)setInterval(function(){show(current+1);},6000);});
+document.querySelectorAll('[data-countdown]').forEach(function(el){var end=new Date(el.dataset.countdown).getTime();function tick(){var distance=Math.max(0,end-Date.now()),values=[Math.floor(distance/86400000),Math.floor(distance%86400000/3600000),Math.floor(distance%3600000/60000),Math.floor(distance%60000/1000)],names=['days','hours','minutes','seconds'];names.forEach(function(n,i){var node=el.querySelector('[data-'+n+']');if(node)node.textContent=String(values[i]).padStart(2,'0');});}tick();setInterval(tick,1000);});
+document.querySelectorAll('[data-quick-add]').forEach(function(form){form.addEventListener('submit',function(e){e.preventDefault();fetch('/cart/add.js',{method:'POST',headers:{Accept:'application/json'},body:new FormData(form)}).then(function(r){if(!r.ok)throw new Error();return r.json();}).then(function(){var count=document.querySelector('.header-cart__count');if(count)count.textContent=Number(count.textContent||0)+1;}).catch(function(){form.submit();});});});
 });

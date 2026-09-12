@@ -1,4 +1,4 @@
-<article class="product-card" aria-label="{{ product.title }}">
+<article class="product-card{% if featured %} product-card--featured{% endif %}" aria-label="{{ product.title }}">
   <div class="product-card__image-wrap">
     {% if product.featured_image %}
       <img class="product-card__image" src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="600" height="750">
@@ -18,27 +18,19 @@
         <span class="badge badge--new">{{ 'products.new' | t }}</span>
       {% endif %}
     </div>
-    <button class="product-card__heart" type="button" aria-label="{{ 'general.wishlist.title' | t }}">
+    <button class="product-card__heart" type="button" aria-label="Add {{ product.title }} to wishlist" data-wishlist>
       {% render 'icon-heart' %}
     </button>
   </div>
   <div class="product-card__body">
-    <p class="product-card__vendor">{{ product.vendor }}</p>
+    <p class="product-card__vendor">{{ product.type | default: product.vendor }}</p>
     <h3 class="product-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
     <div class="product-card__price">
       {% render 'price', product: product %}
     </div>
     <div class="product-card__meta">
-      <div class="product-card__rating">
-        <span>★★★★★</span>
-        <span>4.9</span>
-      </div>
-      <form method="post" action="{{ routes.cart_add_url }}" class="product-card__form">
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        <button class="quick-add-btn" type="submit" {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
-          {{ 'products.quick_add' | t }}
-        </button>
-      </form>
+      <div class="product-card__rating">{% if product.metafields.reviews.rating.value != blank %}<span aria-label="{{ product.metafields.reviews.rating.value }} out of 5">★★★★★</span><span>{{ product.metafields.reviews.rating.value }}</span>{% endif %}</div>
+      {% if product.available %}{% if product.has_only_default_variant %}<form method="post" action="{{ routes.cart_add_url }}" class="product-card__form" data-quick-add><input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}"><button class="quick-add-btn" type="submit">Quick add</button></form>{% else %}<a class="quick-add-btn" href="{{ product.url }}">Choose options</a>{% endif %}{% else %}<span class="badge">Sold out</span>{% endif %}
     </div>
   </div>
 </article>
