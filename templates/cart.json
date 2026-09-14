@@ -9,11 +9,6 @@
  */
 {
   "sections": {
-    "main_cart": {
-      "type": "main-cart",
-      "custom_css": [],
-      "settings": {}
-    },
     "1789385928203294ed": {
       "type": "_blocks",
       "blocks": {
@@ -39,10 +34,15 @@
         "ai_gen_block_16dc4d6_bDmDeU"
       ],
       "settings": {}
+    },
+    "main_cart": {
+      "type": "main-cart",
+      "custom_css": [],
+      "settings": {}
     }
   },
   "order": [
-    "main_cart",
-    "1789385928203294ed"
+    "1789385928203294ed",
+    "main_cart"
   ]
 }
