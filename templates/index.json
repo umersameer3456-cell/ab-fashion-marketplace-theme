@@ -250,19 +250,19 @@
         "background_image": "shopify://shop_images/1296-281-734125-product-1_400x400_9bf8a4ed-c469-4d75-9af3-680e2d5e8a9c.webp"
       }
     },
+    "reviews_xBdnfp": {
+      "type": "reviews",
+      "name": "Customer reviews",
+      "settings": {
+        "title": "Customer reviews"
+      }
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
         "title": "Join AB FASHION",
         "text": "Get new arrivals and private offers in your inbox.",
         "button_label": "Subscribe"
-      }
-    },
-    "reviews_xBdnfp": {
-      "type": "reviews",
-      "name": "Customer reviews",
-      "settings": {
-        "title": "Customer reviews"
       }
     }
   },
