@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -6,61 +15,210 @@
         "one": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_13_2026_08_15_07_PM.png",
+            "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_13_2026_05_10_48_PM.png",
             "eyebrow": "AB FASHION EDIT",
             "heading": "Style for every moment",
             "subheading": "Discover fashion, fragrances and accessories curated for you.",
             "offer": "New season arrivals",
             "button_label": "Shop now",
             "button_link": "",
-            "position": "left"
+            "position": "center"
           }
         },
         "two": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_13_2026_05_10_48_PM.png",
+            "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_13_2026_08_15_07_PM.png",
             "eyebrow": "JUST IN",
             "heading": "The new season edit",
             "subheading": "Elevated essentials made for every occasion.",
             "offer": "Fresh arrivals",
             "button_label": "Explore collection",
             "button_link": "",
-            "position": "left"
+            "position": "center"
           }
         }
       },
-      "block_order": ["one", "two"],
-      "settings": {"autoplay": true}
+      "block_order": [
+        "one",
+        "two"
+      ],
+      "settings": {
+        "autoplay": true
+      }
     },
     "categories": {
       "type": "category-grid",
       "blocks": {
-        "perfumes": {"type": "category", "settings": {"title": "Perfumes", "collection": "perfumes"}},
-        "watches": {"type": "category", "settings": {"title": "Watches", "collection": "watches"}},
-        "clothes": {"type": "category", "settings": {"title": "Clothes", "collection": "clothes"}},
-        "bags": {"type": "category", "settings": {"title": "Bags", "collection": "bags"}},
-        "shoes": {"type": "category", "settings": {"title": "Shoes", "collection": "shoes"}},
-        "accessories": {"type": "category", "settings": {"title": "Accessories", "collection": "accessories"}},
-        "men": {"type": "category", "settings": {"title": "Men's Fashion"}},
-        "women": {"type": "category", "settings": {"title": "Women's Fashion"}}
+        "perfumes": {
+          "type": "category",
+          "settings": {
+            "title": "Perfumes",
+            "collection": "perfume"
+          }
+        },
+        "watches": {
+          "type": "category",
+          "settings": {
+            "title": "Watches",
+            "collection": "watches",
+            "image": "shopify://shop_images/324-132-741449-product-5.webp"
+          }
+        },
+        "clothes": {
+          "type": "category",
+          "settings": {
+            "title": "Clothes",
+            "collection": "clothing"
+          }
+        },
+        "bags": {
+          "type": "category",
+          "settings": {
+            "title": "Bags",
+            "collection": "womens-bags",
+            "image": "shopify://shop_images/2105-39-748100-product-7.webp"
+          }
+        },
+        "shoes": {
+          "type": "category",
+          "settings": {
+            "title": "Men's Fashion",
+            "collection": "wallets",
+            "image": "shopify://shop_images/2227-147-716106-product-2.jpg"
+          }
+        },
+        "accessories": {
+          "type": "category",
+          "settings": {
+            "title": "Women's Clothes",
+            "collection": "womens-clothes"
+          }
+        },
+        "men": {
+          "type": "category",
+          "settings": {
+            "title": "Women's Watches",
+            "collection": "womens-watches"
+          }
+        }
       },
-      "block_order": ["perfumes", "watches", "clothes", "bags", "shoes", "accessories", "men", "women"],
-      "settings": {"title": "Shop by category", "subtitle": "Explore our most-loved departments"}
+      "block_order": [
+        "perfumes",
+        "watches",
+        "clothes",
+        "bags",
+        "shoes",
+        "accessories",
+        "men"
+      ],
+      "settings": {
+        "title": "Shop by category",
+        "subtitle": "Explore our most-loved departments"
+      }
     },
     "promos": {
       "type": "promo-cards",
       "blocks": {
-        "one": {"type": "card", "settings": {"kicker": "NEW COLLECTION", "heading": "Discover the latest fashion", "text": "Fresh styles for every occasion", "button_label": "Shop now"}},
-        "two": {"type": "card", "settings": {"kicker": "NEW ARRIVALS", "heading": "Fresh styles for every occasion", "text": "Fresh styles for every occasion", "button_label": "Shop now"}},
-        "three": {"type": "card", "settings": {"kicker": "TOP SELLERS", "heading": "Most-loved fashion picks", "text": "Fresh styles for every occasion", "button_label": "Shop now"}}
+        "one": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/2227-147-716106-product-3.jpg",
+            "collection": "",
+            "kicker": "NEW COLLECTION",
+            "heading": "Discover the latest fashion",
+            "text": "Fresh styles for every occasion",
+            "button_label": "Shop now",
+            "link": ""
+          }
+        },
+        "two": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/230-10-757491-product-2.webp",
+            "collection": "",
+            "kicker": "NEW ARRIVALS",
+            "heading": "Fresh styles for every occasion",
+            "text": "Fresh styles for every occasion",
+            "button_label": "Shop now",
+            "link": ""
+          }
+        },
+        "three": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/2105-39-748100-product-9.webp",
+            "collection": "",
+            "kicker": "TOP SELLERS",
+            "heading": "Most-loved fashion picks",
+            "text": "Fresh styles for every occasion",
+            "button_label": "Shop now",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["one", "two", "three"],
+      "block_order": [
+        "one",
+        "two",
+        "three"
+      ],
       "settings": {}
     },
-    "deals": {"type": "featured-deals", "settings": {"heading": "Today's Featured Deals", "limit": 6}},
-    "discount": {"type": "discount-banner", "settings": {"kicker": "LIMITED TIME", "heading": "Refresh your wardrobe", "text": "Enjoy special prices on selected AB FASHION styles.", "button_label": "Shop sale"}},
-    "promo": {"type": "promo-banner", "settings": {"title": "Find your signature style", "text": "Premium pieces, everyday essentials and gifts for every occasion.", "button_label": "Explore the edit"}},
-    "trending": {"type": "trending-products", "settings": {"heading": "Trending This Week"}},
-    "newsletter": {"type": "newsletter", "settings": {"title": "Join AB FASHION", "text": "Get new arrivals and private offers in your inbox.", "button_label": "Subscribe"}}
+    "deals": {
+      "type": "featured-deals",
+      "settings": {
+        "heading": "Today's Featured Deals",
+        "collection": "",
+        "limit": 6,
+        "end_date": "2026-12-31T23:59:59"
+      }
+    },
+    "discount": {
+      "type": "discount-banner",
+      "settings": {
+        "kicker": "LIMITED TIME",
+        "heading": "Refresh your wardrobe",
+        "text": "Enjoy special prices on selected AB FASHION styles.",
+        "button_label": "Shop sale",
+        "link": ""
+      }
+    },
+    "promo": {
+      "type": "promo-banner",
+      "settings": {
+        "title": "Find your signature style",
+        "text": "Premium pieces, everyday essentials and gifts for every occasion.",
+        "button_label": "Explore the edit",
+        "button_url": ""
+      }
+    },
+    "trending": {
+      "type": "trending-products",
+      "settings": {
+        "heading": "Trending This Week",
+        "collection": "",
+        "featured_product": ""
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "title": "Join AB FASHION",
+        "text": "Get new arrivals and private offers in your inbox.",
+        "button_label": "Subscribe"
+      }
+    }
   },
-  "order": ["hero", "categories", "promos", "deals", "discount", "promo", "trending", "newsletter"]
+  "order": [
+    "hero",
+    "categories",
+    "promos",
+    "deals",
+    "discount",
+    "promo",
+    "trending",
+    "newsletter"
+  ]
 }
