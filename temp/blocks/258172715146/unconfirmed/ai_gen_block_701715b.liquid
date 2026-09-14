@@ -1,6 +1,241 @@
+{% doc %}
+  @prompt
+    <|sidekick_start|> TASK: Create full product view section with all settings shopify navigate: "themes/158371381386/editor?generate=block&target=newBlocksSection&prompt=Create%20a%20new%20product%20view%20section%20with%20the%20following%20customizable%20settings%20in%20the%20sidebar%20(all%20settings%20must%20be%20included%2C%20none%20missing)%3A%201.%20Show%20description%20(toggle%20on%2Foff)%202.%20Show%20buy%20now%20(toggle%20on%2Foff)%203.%20Desktop%20width%20(slider%2C%20percentage%2C%20default%20100%25)%204.%20Thumbnail%20size%20(slider%2C%20pixels%2C%20default%2096px)%205.%20Column%20gap%20(slider%2C%20pixels%2C%20default%2048px)%206.%20Details%20padding%20(slider%2C%20pixels%2C%20default%2024px)%207.%20Title%20size%20(slider%2C%20pixels%2C%20default%2026px)%208.%20Control%20radius%20(slider%2C%20pixels%2C%20default%202px)%209.%20Button%20radius%20(slider%2C%20pixels%2C%20default%204px)%2010.%20Focus%20color%20(color%20picker%2C%20default%20%231A1A1A)%2011.%20Accent%20color%20(color%20picker%2C%20default%20%2335A93B)%2012.%20Card%20background%20color%20(color%20picker%2C%20default%20%23FFFFFF)%2013.%20Text%20color%20(color%20picker%2C%20default%20%23191919)%2014.%20Muted%20text%20color%20(color%20picker%2C%20default%20%23666666)%2015.%20Border%20color%20(color%20picker%2C%20default%20%23DDDDDD)%20This%20section%20should%20display%20the%20product%20image%20thumbnails%2C%20title%2C%20description%2C%20and%20buy%20now%20button%20styled%20as%20a%20fashion%20store%20product%20view." <|sidekick_end|>
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-view-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.85fr);
+    gap: {{ block.settings.column_gap }}px;
+    padding: {{ block.settings.details_padding }}px;
+    background: {{ block.settings.card_background }};
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.control_radius }}px;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__main-image {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #f6f6f6;
+    border-radius: {{ block.settings.control_radius }}px;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__main-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ block.settings.muted_text_color }};
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__placeholder svg {
+    width: 70%;
+    height: 70%;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__thumb {
+    width: {{ block.settings.thumbnail_size }}px;
+    height: {{ block.settings.thumbnail_size }}px;
+    padding: 0;
+    overflow: hidden;
+    background: transparent;
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.control_radius }}px;
+    cursor: pointer;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__thumb[aria-current="true"] {
+    border: 2px solid {{ block.settings.accent_color }};
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__thumb img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__title {
+    margin: 0 0 12px;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.title_size }}px;
+    line-height: 1.2;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__price {
+    margin-bottom: 20px;
+    color: {{ block.settings.text_color }};
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__description {
+    margin-bottom: 24px;
+    color: {{ block.settings.muted_text_color }};
+    line-height: 1.6;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__description p {
+    margin: 0 0 12px;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__button {
+    display: inline-flex;
+    width: 100%;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border: 1px solid {{ block.settings.accent_color }};
+    border-radius: {{ block.settings.button_radius }}px;
+    background: {{ block.settings.accent_color }};
+    color: #ffffff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .ai-product-view-{{ ai_gen_id }}__button:focus-visible,
+  .ai-product-view-{{ ai_gen_id }}__thumb:focus-visible {
+    outline: 3px solid {{ block.settings.focus_color }};
+    outline-offset: 3px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-product-view-{{ ai_gen_id }} {
+      width: 100%;
+    }
+
+    .ai-product-view-{{ ai_gen_id }}__card {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
+{% endstyle %}
+
+<product-view-{{ ai_gen_id }} class="ai-product-view-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-product-view-{{ ai_gen_id }}__card">
+    <div class="ai-product-view-{{ ai_gen_id }}__gallery">
+      <div class="ai-product-view-{{ ai_gen_id }}__main-image">
+        {% if product.featured_image %}
+          <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="1200" height="1200" data-main-image>
+        {% else %}
+          <div class="ai-product-view-{{ ai_gen_id }}__placeholder">{{ 'image' | placeholder_svg_tag }}</div>
+        {% endif %}
+      </div>
+      {% if product.images.size > 0 %}
+        <div class="ai-product-view-{{ ai_gen_id }}__thumbs" role="list" aria-label="Product images">
+          {% for image in product.images %}
+            <button type="button" class="ai-product-view-{{ ai_gen_id }}__thumb" aria-label="View image {{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}" data-image-url="{{ image | image_url: width: 1200 }}" data-image-alt="{{ image.alt | default: product.title | escape }}">
+              <img src="{{ image | image_url: width: 180 }}" alt="{{ image.alt | default: product.title | escape }}" width="180" height="180" loading="lazy">
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    <div class="ai-product-view-{{ ai_gen_id }}__details">
+      <h1 class="ai-product-view-{{ ai_gen_id }}__title">{{ product.title }}</h1>
+      <div class="ai-product-view-{{ ai_gen_id }}__price">{{ product.selected_or_first_available_variant.price | money }}</div>
+      {% if block.settings.show_description and product.description != blank %}
+        <div class="ai-product-view-{{ ai_gen_id }}__description">{{ product.description }}</div>
+      {% endif %}
+      {% if block.settings.show_buy_now %}
+        {% form 'product', product %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="return_to" value="/checkout">
+          <button type="submit" class="ai-product-view-{{ ai_gen_id }}__button" {% unless product.available %}disabled{% endunless %}>{% if product.available %}Buy now{% else %}Sold out{% endif %}</button>
+        {% endform %}
+      {% endif %}
+    </div>
+  </div>
+</product-view-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductView{{ ai_gen_id }} extends HTMLElement {
+      connectedCallback() {
+        this.mainImage = this.querySelector('[data-main-image]');
+        this.thumbnails = this.querySelectorAll('[data-image-url]');
+        this.thumbnails.forEach((thumbnail) => {
+          thumbnail.addEventListener('click', () => {
+            if (!this.mainImage) return;
+            this.mainImage.src = thumbnail.dataset.imageUrl;
+            this.mainImage.alt = thumbnail.dataset.imageAlt;
+            this.thumbnails.forEach((item) => item.setAttribute('aria-current', 'false'));
+            thumbnail.setAttribute('aria-current', 'true');
+          });
+        });
+      }
+    }
+    if (!customElements.get('product-view-{{ ai_gen_id }}')) {
+      customElements.define('product-view-{{ ai_gen_id }}', ProductView{{ ai_gen_id }});
+    }
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Product view",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "checkbox", "id": "show_description", "label": "Show description", "default": true },
+    { "type": "checkbox", "id": "show_buy_now", "label": "Show buy now", "default": true },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "thumbnail_size", "label": "Thumbnail size", "min": 40, "max": 160, "step": 8, "unit": "px", "default": 96 },
+    { "type": "range", "id": "column_gap", "label": "Column gap", "min": 16, "max": 80, "step": 8, "unit": "px", "default": 48 },
+    { "type": "range", "id": "details_padding", "label": "Details padding", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "title_size", "label": "Title size", "min": 18, "max": 40, "step": 2, "unit": "px", "default": 26 },
+    { "type": "range", "id": "control_radius", "label": "Control radius", "min": 0, "max": 20, "step": 2, "unit": "px", "default": 2 },
+    { "type": "range", "id": "button_radius", "label": "Button radius", "min": 0, "max": 20, "step": 2, "unit": "px", "default": 4 },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "focus_color", "label": "Focus", "default": "#1A1A1A" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#35A93B" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#191919" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text", "default": "#666666" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#DDDDDD" }
+  ],
+  "presets": [{ "name": "Product view" }],
+  "tag": null,
+  "class": "product-view-block"
+}
 {% endschema %}
