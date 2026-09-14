@@ -49,6 +49,50 @@
         "autoplay": true
       }
     },
+    "17893826506c7bb0b5": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_fb0e59b_dDBCVV": {
+          "type": "ai_gen_block_fb0e59b",
+          "settings": {
+            "heading": "Shop by Category",
+            "collections": [
+              "clothing",
+              "wallets",
+              "watches",
+              "perfume",
+              "womens-bags",
+              "womens-clothes",
+              "womens-watches"
+            ],
+            "desktop_width_percent": 80,
+            "columns_desktop": "5",
+            "columns_mobile": "2",
+            "grid_gap": 24,
+            "heading_alignment": "center",
+            "heading_size": 28,
+            "title_size": 18,
+            "hover_scale": 1.2,
+            "corner_radius": 24,
+            "section_padding": 32,
+            "heading_spacing": 16,
+            "background_color": "#ffffff",
+            "card_background": "#ffffff",
+            "text_color": "#191919",
+            "overlay_color": "#191919",
+            "overlay_text_color": "#ffffff",
+            "placeholder_background": "#f2f2f2",
+            "muted_color": "#666666",
+            "focus_color": "#1a1a1a"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_fb0e59b_dDBCVV"
+      ],
+      "settings": {}
+    },
     "categories": {
       "type": "category-grid",
       "blocks": {
@@ -264,54 +308,11 @@
         "text": "Get new arrivals and private offers in your inbox.",
         "button_label": "Subscribe"
       }
-    },
-    "17893826506c7bb0b5": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_fb0e59b_dDBCVV": {
-          "type": "ai_gen_block_fb0e59b",
-          "settings": {
-            "heading": "Shop by collection",
-            "collections": [
-              "clothing",
-              "wallets",
-              "watches",
-              "perfume",
-              "womens-bags",
-              "womens-clothes",
-              "womens-watches"
-            ],
-            "desktop_width_percent": 100,
-            "columns_desktop": "5",
-            "columns_mobile": "2",
-            "grid_gap": 16,
-            "heading_alignment": "center",
-            "heading_size": 30,
-            "title_size": 20,
-            "hover_scale": 1.1,
-            "corner_radius": 10,
-            "section_padding": 24,
-            "heading_spacing": 16,
-            "background_color": "#ffffff",
-            "card_background": "#ffffff",
-            "text_color": "#191919",
-            "overlay_color": "#191919",
-            "overlay_text_color": "#ffffff",
-            "placeholder_background": "#f2f2f2",
-            "muted_color": "#666666",
-            "focus_color": "#1a1a1a"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_fb0e59b_dDBCVV"
-      ],
-      "settings": {}
     }
   },
   "order": [
     "hero",
+    "17893826506c7bb0b5",
     "categories",
     "promos",
     "deals",
@@ -322,7 +323,6 @@
     "trending",
     "promo",
     "reviews_xBdnfp",
-    "newsletter",
-    "17893826506c7bb0b5"
+    "newsletter"
   ]
 }
