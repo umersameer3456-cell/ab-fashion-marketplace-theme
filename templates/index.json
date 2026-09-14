@@ -217,7 +217,7 @@
       "type": "featured-collection",
       "name": "Featured collection",
       "settings": {
-        "title": "PERFUMES",
+        "title": "Best Products",
         "collection": "perfume",
         "limit": 4
       }
