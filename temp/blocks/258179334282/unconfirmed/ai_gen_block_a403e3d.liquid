@@ -1,6 +1,226 @@
+{% doc %}
+  @prompt
+    On the cart page, add a three-dot menu on the right side of every individual cart item. When a customer clicks the three dots, open a small accessible menu containing a clearly labeled “Delete” option. Clicking “Delete” must remove only that specific product or variant line from the cart immediately, update the cart totals and item count without reloading the whole page where supported, and show the empty-cart state if the last item is removed. Make the control work well on mobile and desktop, match the current theme styling, include keyboard and screen-reader accessibility, close when clicking outside or pressing Escape, and prevent accidental duplicate actions while removal is processing.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-cart-menu-{{ ai_gen_id }} {
+    --ai-cart-menu-text: {{ block.settings.text_color }};
+    --ai-cart-menu-surface: {{ block.settings.menu_color }};
+    --ai-cart-menu-border: {{ block.settings.border_color }};
+    display: block;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+  }
+
+  .ai-cart-menu-{{ ai_gen_id }}__trigger {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ai-cart-menu-text);
+    cursor: pointer;
+  }
+
+  .ai-cart-menu-{{ ai_gen_id }}__trigger:hover,
+  .ai-cart-menu-{{ ai_gen_id }}__trigger:focus-visible {
+    background: rgba(25, 25, 25, 0.08);
+    border-color: var(--ai-cart-menu-border);
+    outline: none;
+  }
+
+  .ai-cart-menu-{{ ai_gen_id }}__dots {
+    display: flex;
+    gap: 3px;
+  }
+
+  .ai-cart-menu-{{ ai_gen_id }}__dots span {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .ai-cart-menu-{{ ai_gen_id }}__popover {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 120px;
+    padding: 5px;
+    border: 1px solid var(--ai-cart-menu-border);
+    border-radius: 8px;
+    background: var(--ai-cart-menu-surface);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  }
+
+  .ai-cart-menu-{{ ai_gen_id }}__delete {
+    width: 100%;
+    padding: 9px 12px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: var(--ai-cart-menu-text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .ai-cart-menu-{{ ai_gen_id }}__delete:hover,
+  .ai-cart-menu-{{ ai_gen_id }}__delete:focus-visible {
+    background: rgba(25, 25, 25, 0.08);
+    outline: none;
+  }
+
+  .ai-cart-menu-{{ ai_gen_id }}__delete[aria-disabled="true"] {
+    opacity: 0.55;
+    cursor: wait;
+  }
+{% endstyle %}
+
+<cart-line-actions-{{ ai_gen_id }}
+  class="ai-cart-menu-{{ ai_gen_id }}"
+  data-section-id="{{ section.id }}"
+  data-cart-menu-label="{{ block.settings.menu_label | escape }}"
+  {{ block.shopify_attributes }}
+></cart-line-actions-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    if (customElements.get('cart-line-actions-{{ ai_gen_id }}')) return;
+    class CartLineActions{{ ai_gen_id }} extends HTMLElement {
+      connectedCallback() {
+        this.openMenu = null;
+        this.enhance();
+        this.observer = new MutationObserver(() => this.enhance());
+        this.observer.observe(document.body, { childList: true, subtree: true });
+        document.addEventListener('click', this.onDocumentClick.bind(this));
+        document.addEventListener('keydown', this.onKeydown.bind(this));
+      }
+
+      disconnectedCallback() {
+        if (this.observer) this.observer.disconnect();
+      }
+
+      getRows() {
+        return Array.from(document.querySelectorAll('[data-cart-item], cart-drawer [data-index], .cart-items .cart-item, .cart-drawer .cart-item, .cart-item'));
+      }
+
+      getLine(row) {
+        var input = row.querySelector('input[name="updates[]"], input[data-line-number], [data-line-index]');
+        if (input && input.dataset.lineNumber) return input.dataset.lineNumber;
+        if (row.dataset.index) return row.dataset.index;
+        if (row.dataset.lineIndex) return row.dataset.lineIndex;
+        var key = row.dataset.key || row.dataset.lineKey;
+        if (key) return key;
+        var link = row.querySelector('a[href*="/cart/change"]');
+        if (link) {
+          var match = link.href.match(/[?&]line=([^&]+)/);
+          if (match) return decodeURIComponent(match[1]);
+        }
+        return null;
+      }
+
+      enhance() {
+        this.getRows().forEach((row) => {
+          if (row.dataset.aiCartMenuReady === '{{ ai_gen_id }}') return;
+          var line = this.getLine(row);
+          if (!line) return;
+          row.dataset.aiCartMenuReady = '{{ ai_gen_id }}';
+          var target = row.querySelector('[data-cart-item-actions], .cart-item__quantity, .cart-item__details, .cart-item__media') || row;
+          var wrap = document.createElement('div');
+          wrap.className = 'ai-cart-menu-{{ ai_gen_id }}__instance';
+          wrap.style.position = 'relative';
+          wrap.style.display = 'flex';
+          wrap.style.justifyContent = 'flex-end';
+          wrap.innerHTML = '<button type="button" class="ai-cart-menu-{{ ai_gen_id }}__trigger" aria-haspopup="menu" aria-expanded="false" aria-label="{{ block.settings.menu_label | escape }}"><span class="ai-cart-menu-{{ ai_gen_id }}__dots" aria-hidden="true"><span></span><span></span><span></span></span></button><div class="ai-cart-menu-{{ ai_gen_id }}__popover" role="menu" hidden><button type="button" class="ai-cart-menu-{{ ai_gen_id }}__delete" role="menuitem">{{ block.settings.delete_label | escape }}</button></div>';
+          target.appendChild(wrap);
+          wrap.querySelector('.ai-cart-menu-{{ ai_gen_id }}__trigger').addEventListener('click', (event) => {
+            event.stopPropagation();
+            this.toggle(wrap);
+          });
+          wrap.querySelector('.ai-cart-menu-{{ ai_gen_id }}__delete').addEventListener('click', () => this.removeLine(row, wrap, line));
+        });
+      }
+
+      toggle(wrap) {
+        if (this.openMenu && this.openMenu !== wrap) this.close(this.openMenu);
+        var button = wrap.querySelector('.ai-cart-menu-{{ ai_gen_id }}__trigger');
+        var menu = wrap.querySelector('.ai-cart-menu-{{ ai_gen_id }}__popover');
+        var expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!expanded));
+        menu.hidden = expanded;
+        this.openMenu = expanded ? null : wrap;
+        if (!expanded) menu.querySelector('button').focus();
+      }
+
+      close(wrap) {
+        if (!wrap) return;
+        wrap.querySelector('.ai-cart-menu-{{ ai_gen_id }}__trigger').setAttribute('aria-expanded', 'false');
+        wrap.querySelector('.ai-cart-menu-{{ ai_gen_id }}__popover').hidden = true;
+      }
+
+      onDocumentClick(event) {
+        if (this.openMenu && !event.target.closest('.ai-cart-menu-{{ ai_gen_id }}__instance')) {
+          this.close(this.openMenu);
+          this.openMenu = null;
+        }
+      }
+
+      onKeydown(event) {
+        if (event.key === 'Escape' && this.openMenu) {
+          var button = this.openMenu.querySelector('.ai-cart-menu-{{ ai_gen_id }}__trigger');
+          this.close(this.openMenu);
+          this.openMenu = null;
+          button.focus();
+        }
+      }
+
+      async removeLine(row, wrap, line) {
+        var action = wrap.querySelector('.ai-cart-menu-{{ ai_gen_id }}__delete');
+        if (action.getAttribute('aria-disabled') === 'true') return;
+        action.setAttribute('aria-disabled', 'true');
+        action.disabled = true;
+        try {
+          var response = await fetch('/cart/change.js', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ line: line, quantity: 0 }) });
+          if (!response.ok) throw new Error('Cart update failed');
+          var sections = document.querySelector('cart-items, cart-drawer');
+          if (sections && typeof sections.refresh === 'function') await sections.refresh();
+          else if (window.Shopify && Shopify.routes && Shopify.routes.root) {
+            var html = await fetch(Shopify.routes.root + '?sections=cart-drawer,main-cart-items,cart-icon-bubble').then((result) => result.json());
+            Object.keys(html).forEach((key) => { var selector = key === 'cart-drawer' ? 'cart-drawer' : key === 'main-cart-items' ? 'main-cart-items' : 'cart-icon-bubble'; var node = document.querySelector(selector); if (node) node.innerHTML = new DOMParser().parseFromString(html[key], 'text/html').querySelector(selector)?.innerHTML || node.innerHTML; });
+          } else {
+            row.remove();
+          }
+        } catch (error) {
+          action.removeAttribute('aria-disabled');
+          action.disabled = false;
+        }
+      }
+    }
+    customElements.define('cart-line-actions-{{ ai_gen_id }}', CartLineActions{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Cart item menu",
+  "settings": [
+    { "type": "text", "id": "menu_label", "label": "Menu label", "default": "Cart item options" },
+    { "type": "text", "id": "delete_label", "label": "Delete label", "default": "Delete" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#191919" },
+    { "type": "color", "id": "menu_color", "label": "Menu background", "default": "#ffffff" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#d9d9d9" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 }
+  ],
+  "presets": [{ "name": "Cart item menu" }],
+  "tag": null,
+  "class": "cart-item-menu-block"
+}
 {% endschema %}
