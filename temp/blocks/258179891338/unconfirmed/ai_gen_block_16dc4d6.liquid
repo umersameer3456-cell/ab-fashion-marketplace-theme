@@ -1,6 +1,249 @@
+{% doc %}
+  @prompt
+    Create a cart line-item control block that shows a 3-dots menu next to each product line in the cart, with a Remove option inside it so customers can delete a product directly from the cart when they no longer want it.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% assign cart_line = line_item | default: item %}
+
+{% style %}
+  .ai-cart-line-menu-{{ ai_gen_id }} {
+    display: block;
+    position: relative;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-cart-line-menu__trigger-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    color: {{ block.settings.icon_color }};
+    background: transparent;
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    cursor: pointer;
+  }
+
+  .ai-cart-line-menu__trigger-{{ ai_gen_id }}:hover,
+  .ai-cart-line-menu__trigger-{{ ai_gen_id }}:focus-visible {
+    color: {{ block.settings.hover_color }};
+    border-color: {{ block.settings.hover_color }};
+  }
+
+  .ai-cart-line-menu__trigger-{{ ai_gen_id }}:focus-visible,
+  .ai-cart-line-menu__remove-{{ ai_gen_id }}:focus-visible {
+    outline: 2px solid {{ block.settings.hover_color }};
+    outline-offset: 2px;
+  }
+
+  .ai-cart-line-menu__dots-{{ ai_gen_id }} {
+    display: flex;
+    gap: 3px;
+  }
+
+  .ai-cart-line-menu__dot-{{ ai_gen_id }} {
+    width: 4px;
+    height: 4px;
+    background: currentColor;
+    border-radius: 50%;
+  }
+
+  .ai-cart-line-menu__panel-{{ ai_gen_id }} {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 10;
+    min-width: 150px;
+    padding: 6px;
+    background: {{ block.settings.menu_background }};
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.menu_radius }}px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .ai-cart-line-menu__remove-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    color: {{ block.settings.remove_color }};
+    background: transparent;
+    border: 0;
+    border-radius: 4px;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .ai-cart-line-menu__remove-{{ ai_gen_id }}:hover {
+    background: {{ block.settings.hover_background }};
+  }
+{% endstyle %}
+
+<cart-line-menu-{{ ai_gen_id }} class="ai-cart-line-menu-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <button
+    type="button"
+    class="ai-cart-line-menu__trigger-{{ ai_gen_id }}"
+    aria-label="{{ block.settings.menu_label | escape }}"
+    aria-expanded="false"
+    aria-controls="ai-cart-line-menu-panel-{{ ai_gen_id }}"
+  >
+    <span class="ai-cart-line-menu__dots-{{ ai_gen_id }}" aria-hidden="true">
+      <span class="ai-cart-line-menu__dot-{{ ai_gen_id }}"></span>
+      <span class="ai-cart-line-menu__dot-{{ ai_gen_id }}"></span>
+      <span class="ai-cart-line-menu__dot-{{ ai_gen_id }}"></span>
+    </span>
+  </button>
+
+  <div id="ai-cart-line-menu-panel-{{ ai_gen_id }}" class="ai-cart-line-menu__panel-{{ ai_gen_id }}" hidden>
+    {% if cart_line != blank %}
+      <form method="post" action="{{ routes.cart_change_url }}">
+        <input type="hidden" name="id" value="{{ cart_line.key | escape }}">
+        <input type="hidden" name="quantity" value="0">
+        <button type="submit" class="ai-cart-line-menu__remove-{{ ai_gen_id }}">
+          {{ block.settings.remove_label | escape }}
+        </button>
+      </form>
+    {% endif %}
+  </div>
+</cart-line-menu-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CartLineMenu{{ ai_gen_id }} extends HTMLElement {
+      connectedCallback() {
+        this.trigger = this.querySelector('.ai-cart-line-menu__trigger-{{ ai_gen_id }}');
+        this.panel = this.querySelector('.ai-cart-line-menu__panel-{{ ai_gen_id }}');
+        if (!this.trigger || !this.panel) return;
+
+        this.trigger.addEventListener('click', () => {
+          const isOpen = !this.panel.hidden;
+          this.panel.hidden = isOpen;
+          this.trigger.setAttribute('aria-expanded', String(!isOpen));
+        });
+
+        this.handleDocumentClick = (event) => {
+          if (!this.contains(event.target)) {
+            this.panel.hidden = true;
+            this.trigger.setAttribute('aria-expanded', 'false');
+          }
+        };
+
+        this.handleKeydown = (event) => {
+          if (event.key === 'Escape') {
+            this.panel.hidden = true;
+            this.trigger.setAttribute('aria-expanded', 'false');
+            this.trigger.focus();
+          }
+        };
+
+        document.addEventListener('click', this.handleDocumentClick);
+        this.addEventListener('keydown', this.handleKeydown);
+      }
+
+      disconnectedCallback() {
+        if (this.handleDocumentClick) document.removeEventListener('click', this.handleDocumentClick);
+        if (this.handleKeydown) this.removeEventListener('keydown', this.handleKeydown);
+      }
+    }
+
+    if (!customElements.get('cart-line-menu-{{ ai_gen_id }}')) {
+      customElements.define('cart-line-menu-{{ ai_gen_id }}', CartLineMenu{{ ai_gen_id }});
+    }
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Cart line menu",
+  "settings": [
+    {
+      "type": "text",
+      "id": "menu_label",
+      "label": "Menu label",
+      "default": "Cart item options"
+    },
+    {
+      "type": "text",
+      "id": "remove_label",
+      "label": "Remove label",
+      "default": "Remove"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon",
+      "default": "#191919"
+    },
+    {
+      "type": "color",
+      "id": "hover_color",
+      "label": "Hover icon",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "remove_color",
+      "label": "Remove text",
+      "default": "#b42318"
+    },
+    {
+      "type": "color",
+      "id": "menu_background",
+      "label": "Menu background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "hover_background",
+      "label": "Hover background",
+      "default": "#f2f2f2"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#d6d6d6"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Button radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "menu_radius",
+      "label": "Menu radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart line menu"
+    }
+  ],
+  "tag": null,
+  "class": "cart-line-menu-block"
+}
 {% endschema %}
