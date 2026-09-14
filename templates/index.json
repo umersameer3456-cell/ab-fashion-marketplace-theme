@@ -170,19 +170,74 @@
       "type": "featured-deals",
       "settings": {
         "heading": "Today's Featured Deals",
-        "collection": "",
+        "collection": "watches",
         "limit": 6,
-        "end_date": "2026-12-31T23:59:59"
+        "end_date": "2026-09-15T23:59:59"
       }
+    },
+    "1789376623a0d04ac9": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_39c5732_aJ86R7": {
+          "type": "ai_gen_block_39c5732",
+          "settings": {
+            "collection": "clothing",
+            "heading": "Shop the latest",
+            "subtitle": "Clothes, watches and everyday accessories",
+            "products_to_show": 8,
+            "link_label": "View all",
+            "desktop_width_percent": 100,
+            "columns_desktop": "4",
+            "columns_mobile": "2",
+            "card_gap": 16,
+            "card_radius": 8,
+            "heading_size": 28
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_39c5732_aJ86R7"
+      ],
+      "settings": {}
     },
     "discount": {
       "type": "discount-banner",
       "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_Aug_13_2026_09_27_03_PM.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_13_2026_08_31_38_PM.png",
         "kicker": "LIMITED TIME",
         "heading": "Refresh your wardrobe",
         "text": "Enjoy special prices on selected AB FASHION styles.",
         "button_label": "Shop sale",
         "link": ""
+      }
+    },
+    "featured_collection_VCjDQz": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "title": "PERFUMES",
+        "collection": "perfume",
+        "limit": 4
+      }
+    },
+    "showcase_card_VpaMTN": {
+      "type": "showcase-card",
+      "name": "Collection banner",
+      "settings": {
+        "title": "New arrivals",
+        "collection": "",
+        "image": "shopify://shop_images/57a0b441-77a7-4239-b1be-58161d75d0a7.png",
+        "button_label": "Shop now"
+      }
+    },
+    "trending": {
+      "type": "trending-products",
+      "settings": {
+        "heading": "Trending This Week",
+        "collection": "womens-clothes",
+        "featured_product": ""
       }
     },
     "promo": {
@@ -191,15 +246,8 @@
         "title": "Find your signature style",
         "text": "Premium pieces, everyday essentials and gifts for every occasion.",
         "button_label": "Explore the edit",
-        "button_url": ""
-      }
-    },
-    "trending": {
-      "type": "trending-products",
-      "settings": {
-        "heading": "Trending This Week",
-        "collection": "",
-        "featured_product": ""
+        "button_url": "",
+        "background_image": "shopify://shop_images/1296-281-734125-product-1_400x400_9bf8a4ed-c469-4d75-9af3-680e2d5e8a9c.webp"
       }
     },
     "newsletter": {
@@ -209,6 +257,13 @@
         "text": "Get new arrivals and private offers in your inbox.",
         "button_label": "Subscribe"
       }
+    },
+    "reviews_xBdnfp": {
+      "type": "reviews",
+      "name": "Customer reviews",
+      "settings": {
+        "title": "Customer reviews"
+      }
     }
   },
   "order": [
@@ -216,9 +271,13 @@
     "categories",
     "promos",
     "deals",
+    "1789376623a0d04ac9",
     "discount",
-    "promo",
+    "featured_collection_VCjDQz",
+    "showcase_card_VpaMTN",
     "trending",
+    "promo",
+    "reviews_xBdnfp",
     "newsletter"
   ]
 }
