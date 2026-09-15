@@ -1,18 +1,53 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main_product": {
-      "type": "main-product",
-      "settings": {}
-    },
     "related_products": {
       "type": "featured-collection",
       "settings": {
         "title": "You may also like",
         "collection": "frontpage",
-        "limit": 4,
-        "layout": "grid"
+        "limit": 4
       }
+    },
+    "1789379155fbbd5437": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_59032d1_XYmPkK": {
+          "type": "ai_gen_block_59032d1",
+          "settings": {
+            "show_description": true,
+            "button_label": "Add to cart",
+            "desktop_width_percent": 100,
+            "column_gap": 48,
+            "details_padding": 24,
+            "title_size": 26,
+            "radius": 2,
+            "background_color": "#ffffff",
+            "card_color": "#ffffff",
+            "text_color": "#191919",
+            "accent_color": "#35a93b",
+            "border_color": "#d9d9d9",
+            "muted_color": "#555555"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_59032d1_XYmPkK"
+      ],
+      "settings": {}
     }
   },
-  "order": ["main_product", "related_products"]
+  "order": [
+    "related_products",
+    "1789379155fbbd5437"
+  ]
 }

@@ -1,0 +1,77 @@
+{% doc %}
+  @prompt
+    aik fashion product listing ka colume bana ky do
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-fashion-product-{{ ai_gen_id }} { display: block; width: {{ block.settings.desktop_width_percent }}%; max-width: 100%; background: {{ block.settings.card_background }}; color: {{ block.settings.text_color }}; border: 1px solid {{ block.settings.border_color }}; border-radius: {{ block.settings.card_radius }}px; overflow: hidden; }
+  .ai-fashion-product__media-{{ ai_gen_id }} { position: relative; aspect-ratio: 4 / 5; background: {{ block.settings.image_background }}; overflow: hidden; display: block; }
+  .ai-fashion-product__media-{{ ai_gen_id }} img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .ai-fashion-product__placeholder-{{ ai_gen_id }} { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: {{ block.settings.muted_color }}; }
+  .ai-fashion-product__placeholder-{{ ai_gen_id }} svg { width: 58%; height: 58%; }
+  .ai-fashion-product__badge-{{ ai_gen_id }} { position: absolute; top: 12px; left: 12px; padding: 6px 10px; border-radius: 999px; background: {{ block.settings.badge_background }}; color: {{ block.settings.badge_text_color }}; font-size: 12px; font-weight: 700; line-height: 1; }
+  .ai-fashion-product__content-{{ ai_gen_id }} { display: flex; flex-direction: column; gap: 12px; padding: 18px; }
+  .ai-fashion-product__vendor-{{ ai_gen_id }} { margin: 0; color: {{ block.settings.muted_color }}; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .ai-fashion-product__title-{{ ai_gen_id }} { margin: 0; color: {{ block.settings.text_color }}; font-size: {{ block.settings.title_size }}px; line-height: 1.25; }
+  .ai-fashion-product__title-{{ ai_gen_id }} a { color: inherit; text-decoration: none; }
+  .ai-fashion-product__title-{{ ai_gen_id }} a:hover, .ai-fashion-product__title-{{ ai_gen_id }} a:focus-visible { text-decoration: underline; }
+  .ai-fashion-product__price-{{ ai_gen_id }} { display: flex; align-items: center; gap: 8px; color: {{ block.settings.text_color }}; font-size: 16px; font-weight: 700; }
+  .ai-fashion-product__compare-{{ ai_gen_id }} { color: {{ block.settings.muted_color }}; font-size: 13px; font-weight: 400; text-decoration: line-through; }
+  .ai-fashion-product__button-{{ ai_gen_id }} { display: inline-flex; align-items: center; justify-content: center; width: 100%; min-height: 44px; padding: 11px 16px; border: 1px solid {{ block.settings.button_background }}; border-radius: {{ block.settings.button_radius }}px; background: {{ block.settings.button_background }}; color: {{ block.settings.button_text_color }}; font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer; }
+  .ai-fashion-product__button-{{ ai_gen_id }}:hover, .ai-fashion-product__button-{{ ai_gen_id }}:focus-visible { background: {{ block.settings.button_hover_background }}; border-color: {{ block.settings.button_hover_background }}; }
+  .ai-fashion-product__empty-{{ ai_gen_id }} { padding: 28px 18px; color: {{ block.settings.muted_color }}; font-size: 14px; text-align: center; }
+{% endstyle %}
+
+<div class="ai-fashion-product-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.product != blank %}
+    <a class="ai-fashion-product__media-{{ ai_gen_id }}" href="{{ block.settings.product.url }}" aria-label="{{ block.settings.product.title | escape }}">
+      {% if block.settings.product.featured_image %}
+        <img src="{{ block.settings.product.featured_image | image_url: width: 900 }}" alt="{{ block.settings.product.featured_image.alt | default: block.settings.product.title | escape }}" width="{{ block.settings.product.featured_image.width }}" height="{{ block.settings.product.featured_image.height }}" loading="lazy">
+      {% else %}
+        <div class="ai-fashion-product__placeholder-{{ ai_gen_id }}">{{ 'product-apparel-1' | placeholder_svg_tag }}</div>
+      {% endif %}
+      {% if block.settings.show_badge and block.settings.badge_text != blank %}<span class="ai-fashion-product__badge-{{ ai_gen_id }}">{{ block.settings.badge_text | escape }}</span>{% endif %}
+    </a>
+    <div class="ai-fashion-product__content-{{ ai_gen_id }}">
+      {% if block.settings.show_vendor and block.settings.product.vendor != blank %}<p class="ai-fashion-product__vendor-{{ ai_gen_id }}">{{ block.settings.product.vendor | escape }}</p>{% endif %}
+      <h2 class="ai-fashion-product__title-{{ ai_gen_id }}"><a href="{{ block.settings.product.url }}">{{ block.settings.product.title | escape }}</a></h2>
+      <div class="ai-fashion-product__price-{{ ai_gen_id }}"><span>{{ block.settings.product.price | money }}</span>{% if block.settings.product.compare_at_price > block.settings.product.price %}<span class="ai-fashion-product__compare-{{ ai_gen_id }}">{{ block.settings.product.compare_at_price | money }}</span>{% endif %}</div>
+      {% if block.settings.show_button %}<a class="ai-fashion-product__button-{{ ai_gen_id }}" href="{{ block.settings.product.url }}">{{ block.settings.button_text | escape }}</a>{% endif %}
+    </div>
+  {% else %}<div class="ai-fashion-product__empty-{{ ai_gen_id }}">Product select karein to product card yahan nazar aayega.</div>{% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Fashion product card",
+  "settings": [
+    { "type": "header", "content": "Product" },
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "checkbox", "id": "show_vendor", "label": "Show brand", "default": true },
+    { "type": "checkbox", "id": "show_badge", "label": "Show badge", "default": true },
+    { "type": "text", "id": "badge_text", "label": "Badge text", "default": "New arrival" },
+    { "type": "checkbox", "id": "show_button", "label": "Show button", "default": true },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "View product" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Desktop width", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "title_size", "label": "Title size", "min": 14, "max": 28, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "card_radius", "label": "Card radius", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "button_radius", "label": "Button radius", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 6 },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#ffffff" },
+    { "type": "color", "id": "image_background", "label": "Image background", "default": "#f5f5f5" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#191919" },
+    { "type": "color", "id": "muted_color", "label": "Muted text", "default": "#5f5f5f" },
+    { "type": "color", "id": "border_color", "label": "Border", "default": "#e5e5e5" },
+    { "type": "color", "id": "badge_background", "label": "Badge background", "default": "#1a1a1a" },
+    { "type": "color", "id": "badge_text_color", "label": "Badge text", "default": "#ffffff" },
+    { "type": "color", "id": "button_background", "label": "Button background", "default": "#1a1a1a" },
+    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#ffffff" },
+    { "type": "color", "id": "button_hover_background", "label": "Button hover", "default": "#35a93b" }
+  ],
+  "presets": [{ "name": "Fashion product card" }],
+  "tag": null,
+  "class": "fashion-product-block"
+}
+{% endschema %}
