@@ -9,14 +9,6 @@
  */
 {
   "sections": {
-    "related_products": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "You may also like",
-        "collection": "frontpage",
-        "limit": 4
-      }
-    },
     "1789379155fbbd5437": {
       "type": "_blocks",
       "blocks": {
@@ -47,7 +39,6 @@
     }
   },
   "order": [
-    "related_products",
     "1789379155fbbd5437"
   ]
 }
