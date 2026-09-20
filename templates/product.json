@@ -36,9 +36,18 @@
         "ai_gen_block_59032d1_XYmPkK"
       ],
       "settings": {}
+    },
+    "related_products": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "You may also like",
+        "collection": "all-collections",
+        "limit": 4
+      }
     }
   },
   "order": [
-    "1789379155fbbd5437"
+    "1789379155fbbd5437",
+    "related_products"
   ]
 }
